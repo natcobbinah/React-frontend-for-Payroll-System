@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import {Link } from 'react-router-dom'
-import { Switch, Route} from 'react-router-dom'
-import viewusers from '../users/viewusers'
-import adduser from '../users/adduser'
-import edituser from '../users/edituser'
-import searchuser from '../users/searchuser'
+import {Route} from 'react-router-dom'
 import Usermain from '../users/Usermain'
 
 class Dashboard extends Component {

@@ -6,7 +6,7 @@ class Navbar extends Component {
       return (
         <nav className="navbar navbar-expand-lg " color-on-scroll="500">
           <div className="container-fluid">
-            <a className="navbar-brand" href="/">AMAL PAYROLL USER MANAGEMENT SYSTEM</a>
+            <a className="navbar-brand" href="/">AMALITECH PAYROLL USER MANAGEMENT SYSTEM</a>
             <div className="collapse navbar-collapse justify-content-end" id="navigation">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">

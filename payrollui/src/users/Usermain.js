@@ -7,10 +7,12 @@ import edituser from './edituser'
 import searchuser from './searchuser'
 
 import { Switch, Route} from 'react-router-dom'
- 
+import  './Usermain.css';;
+
 class Usermain extends Component{
     render(){
         return(
+            <div className="container-fluid">
                 <div className="row">
                 <div className="col-md-2">
                       <li className="nav-item">
@@ -46,6 +48,7 @@ class Usermain extends Component{
                     <Route path="/dashboard/usersmain/searchuser" component={searchuser}/>
                 </Switch>
                 </div>
+            </div>
             </div>
             /* <div className="container">
                 <div className="col-md-4">
