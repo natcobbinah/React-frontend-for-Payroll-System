@@ -27,6 +27,7 @@ class adduser extends Component{
             votersid:'',
             name:'',
             error:null,
+            postRecordSuccess:null,
         }
 
         this.getFormDataandSavetoDB = this.getFormDataandSavetoDB.bind(this);
@@ -66,16 +67,25 @@ class adduser extends Component{
             },
             headers: headers
         })
+        .then(postRecordSuccess => this.setState({postRecordSuccess: postRecordSuccess.data}))
         .catch(error => this.setState({error}));
-
-      /*   console.log(name + ":" + address + ":" + password + ":" + phonenumber + ":" + bankaccountnumber + ":" + birthdate + ":" + hiredate + ":" + email);
-        console.log(city + ":" + employeeid + ":" + employeelevel + ":" + enabled + ":" + gender + ":" + maritalstatus + ":" + birthcertid + ":" + driverslicenseid);
-        console.log(passportid + ":" + ssnitid + ":" + votersid); */
     }
 
     render(){
+        const{error, postRecordSuccess} = this.state;
         return(
             <div className="container-fluid mt-3">
+                { error ?
+                   <div className="alert alert-danger" role="alert">
+                     <p>Error saving using record</p>
+                   </div> : null
+                }
+                { postRecordSuccess ?
+                    <div className="alert alert-success" role="alert">
+                      <p>User record successfully saved</p>
+                  </div>  :
+                  null     
+                }
                 <form>
                     <div className="form-group">
                         <label htmlFor="fullnamelbl">Name</label>
@@ -174,5 +184,5 @@ class adduser extends Component{
     }
 }
 
-//, , driverslicenseid, passportid, 
+
 export default adduser;
