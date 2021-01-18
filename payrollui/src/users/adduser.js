@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios';
 import {PATH_ADDUSER} from '../API_URLS';
 
 class adduser extends Component{
@@ -14,7 +15,7 @@ class adduser extends Component{
             enabled: true,
             password:'',
             phonenumber:'',
-            bankaccountnumbe:'',
+            bankaccountnumber:'',
             birthdate:'',
             gender:'',
             hiredate:'',
@@ -25,6 +26,7 @@ class adduser extends Component{
             ssnitid:'',
             votersid:'',
             name:'',
+            error:null,
         }
 
         this.getFormDataandSavetoDB = this.getFormDataandSavetoDB.bind(this);
@@ -36,7 +38,35 @@ class adduser extends Component{
             gender,hiredate,maritalstatus,birthcertid,driverslicenseid,passportid,ssnitid,votersid,name
         }=this.state;
 
+        const headers = { 'content-type': 'application/json'};
 
+        axios({
+            method: 'post',
+            url: PATH_ADDUSER,
+            data: {
+                address: address,
+                city: city,
+                email: email,
+                employeeid: employeeid,
+                employeelevel: employeelevel ,
+                enabled: enabled,
+                password: password,
+                phonenumber: phonenumber,
+                bankaccountnumber:bankaccountnumber,
+                birthdate: birthdate,
+                gender:gender,
+                hiredate: hiredate,
+                maritalstatus:maritalstatus,
+                birthcertid: birthcertid,
+                driverslicenseid: driverslicenseid,
+                passportid: passportid,
+                ssnitid: ssnitid,
+                votersid:votersid,
+                name: name,
+            },
+            headers: headers
+        })
+        .catch(error => this.setState({error}));
 
       /*   console.log(name + ":" + address + ":" + password + ":" + phonenumber + ":" + bankaccountnumber + ":" + birthdate + ":" + hiredate + ":" + email);
         console.log(city + ":" + employeeid + ":" + employeelevel + ":" + enabled + ":" + gender + ":" + maritalstatus + ":" + birthcertid + ":" + driverslicenseid);
