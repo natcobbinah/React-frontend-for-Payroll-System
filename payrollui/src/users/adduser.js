@@ -74,7 +74,7 @@ class adduser extends Component{
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="votersidlbl">VotersID</label>
-                            <input type="date" className="form-control" id="votersidlbl"/>
+                            <input type="text" className="form-control" id="votersidlbl"/>
                         </div>
                     </div>
                     <div className="form-row">
@@ -88,7 +88,7 @@ class adduser extends Component{
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="passportlbl">PassportNo</label>
-                            <input type="date" className="form-control" id="passportlbl"/>
+                            <input type="text" className="form-control" id="passportlbl"/>
                         </div>
                     </div>
                     <div className="form-row">

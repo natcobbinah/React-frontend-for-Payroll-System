@@ -49,7 +49,7 @@ class viewusers extends Component{
         }
         return(
             <div>
-                <Search value={searchUser} onChange={this.onSearchChange}>Search by Fullname</Search>
+                <Search value={searchUser} onChange={this.onSearchChange}>Search</Search>
                 <Button onClick={() => this.fetchAllUsers(page + 1)} type="button" className="btn btn-primary">
                     NextRecord
                 </Button>
@@ -69,7 +69,7 @@ class Search extends Component{
     render(){
         const {value,onChange,onSubmit,children} = this.props;
         return(
-            <form onSubmit={onSubmit}>
+            <form className="form-inline mr-5 my-2 my-lg-0 mt-5 py-4" onSubmit={onSubmit}>
                  {children}<input type="text" value={value} onChange={onChange} className="form-control form-control-lg" placeholder="Search for user by name" aria-label="Search"/>
             </form>
         );
