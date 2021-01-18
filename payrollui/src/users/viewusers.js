@@ -14,11 +14,15 @@ class viewusers extends Component{
             searchUser:'',
             result: null,
             error:null,
+            userstoDisable: [],
+            checked:false,
         }
 
+        this.onDisableUsers = this.onDisableUsers.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.fetchAllUsers = this.fetchAllUsers.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
+        this.onCheckboxSelected = this.onCheckboxSelected.bind(this);
     }
 
     onSearchChange(event){
@@ -33,6 +37,22 @@ class viewusers extends Component{
         .catch(error => this.setState({error}));
     }
 
+    onCheckboxSelected(id){
+        const{userstoDisable}=this.state;
+        this.setState({
+            userstoDisable: userstoDisable.concat(id)
+        })
+        console.log(userstoDisable);
+    }
+
+    onDisableUsers(id){
+        const{userstoDisable}=this.state;
+        this.setState({
+            userstoDisable: userstoDisable.push(id)
+        })
+        console.log(userstoDisable);
+    }
+
     onDelete(id){
         axios.get(`${PATH_DELETEUSER}?${PARAM_DELETE}${id}`)
         this.componentDidMount();
@@ -43,10 +63,7 @@ class viewusers extends Component{
     }
     
     render(){
-        const{searchUser,error,page = 0,result} = this.state;
-        if(error){
-            return <p>Something Went wrong:</p>
-        }
+        const{searchUser,error,page = 0,result,checked} = this.state;
         return(
             <div>
                 <Search value={searchUser} onChange={this.onSearchChange}>Search</Search>
@@ -56,8 +73,9 @@ class viewusers extends Component{
                 <Button onClick={() => this.fetchAllUsers(page - 1)} type="button" className="btn btn-success">
                     PreviousRecord
                 </Button>  
+                {error ? <p>Something went wrong, fetching records from Server</p> : null}
                 { result ?
-                        <Table list={result.content} pattern={searchUser} onDelete={this.onDelete}/>
+                        <Table list={result.content} pattern={searchUser} onDelete={this.onDelete} onDisableUsers={this.onDisableUsers} onCheckboxSelected={this.onCheckboxSelected} checboxsetState={checked}/>
                 : null
                 }   
             </div>
@@ -78,7 +96,7 @@ class Search extends Component{
 
 class Table extends Component{
     render(){
-        const{pattern,list,onDelete} = this.props;
+        const{pattern,list,onDelete,onDisableUsers,onCheckboxSelected,checboxsetState} = this.props;
         return(
             <div className="table-responsive table-hover table-striped">
                 <table className="table">
@@ -105,10 +123,10 @@ class Table extends Component{
                           <td>{user.gender}</td>
                           <td>{user.hiredate}</td>
                           <td>
-                             <input type="checkbox"/>
+                             <Checkbox onChange={() => onCheckboxSelected(user.id)} type="checkbox" checked={checboxsetState}/>
                           </td>
                           <td>
-                              <Button onClick={() => onDelete(user.id)} type="button" className="btn btn-success">
+                              <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-success">
                                 Disable
                               </Button>
                               <Button onClick={() => onDelete(user.id)} type="button" className="btn btn-danger">
@@ -120,6 +138,15 @@ class Table extends Component{
                     </tbody>
                 </table>
             </div> 
+        );
+    }
+}
+
+class Checkbox extends Component{
+    render(){
+        const{onChange,type,checked} = this.props;
+        return(
+            <input type={type} onChange={onChange} checked={checked}/>
         );
     }
 }
