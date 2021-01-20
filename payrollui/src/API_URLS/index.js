@@ -12,3 +12,6 @@ export const PATH_FINDUSERBY_EMAIL = 'http://localhost:2345/v1/test/useremail';
 export const PATH_GET_DEPARTMENT = 'http://localhost:2345/v1/test/departments';
 export const PATH_ADD_DEPARTMENT = 'http://localhost:2345/v1/test/departments';
 export const PATH_DELETE_DEPARTMENT = 'http://localhost:2345/v1/test/deletedepartment';
+export const PATH_GET_ROLES = 'http://localhost:2345/v1/test/role';
+export const PATH_DELETE_ROLE = 'http://localhost:2345/v1/test/deleterole';
+export const PATH_ADD_ROLE = 'http://localhost:2345/v1/test/role';

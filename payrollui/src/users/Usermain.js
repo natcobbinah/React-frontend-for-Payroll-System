@@ -50,41 +50,6 @@ class Usermain extends Component{
                 </div>
             </div>
             </div>
-            /* <div className="container">
-                <div className="col-md-4">
-                    <ul>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/dashboard/usersmain/viewusers">
-                                <i className="nc-icon nc-chart-pie-35"></i>
-                                <p>View Users</p>
-                            </NavLink>
-                        </li>
-                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/dashboard/adduser">
-                                <i className="nc-icon nc-circle-09"></i>
-                                <p>Add User</p>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/dashboard/edituser">
-                                <i className="nc-icon nc-circle-09"></i>
-                                <p>Edit User</p>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/dashboard/searchuser">
-                                <i className="nc-icon nc-circle-09"></i>
-                                <p>Search User</p>
-                            </NavLink>
-                        </li> 
-                </ul>
-                </div>
-                <div className="col-md-9">
-                <Switch>
-                    <Route path="/dashboard/usersmain/viewusers" component={viewusers}/>
-                </Switch>
-                </div>
-            </div>     */
         );
     }
 }

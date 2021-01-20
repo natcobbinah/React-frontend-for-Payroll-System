@@ -3,6 +3,7 @@ import {Link } from 'react-router-dom'
 import {Route} from 'react-router-dom'
 import Usermain from '../users/Usermain'
 import DepartmentMain from '../departments/departmentmain'
+import Rolesmain from '../roles/rolesMain'
 
 class Dashboard extends Component {
   render() {
@@ -14,7 +15,7 @@ class Dashboard extends Component {
                 <Link to="/main/dashboard/usersmain">Users</Link>
             </li>
             <li className="nav-item mx-5">
-                <Link to="/">Roles</Link>
+                <Link to="/main/dashboard/roles">Roles</Link>
             </li>
             <li className="nav-item mx-5">
                 <Link to="/main/dashboard/department">Department</Link>
@@ -28,6 +29,7 @@ class Dashboard extends Component {
             <div className="col-md-12">
                 <Route path="/main/dashboard/usersmain" component={Usermain}/>
                 <Route path="/main/dashboard/department" component={DepartmentMain}/>
+                <Route path="/main/dashboard/roles" component={Rolesmain}/>
             </div>
         
           {/* <div className="col-md-9">
