@@ -16,25 +16,25 @@ class Usermain extends Component{
                 <div className="row">
                 <div className="col-md-2">
                       <li className="nav-item">
-                            <NavLink className="nav-link" to="/dashboard/usersmain/viewusers">
+                            <NavLink className="nav-link" to="/main/dashboard/usersmain/viewusers">
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>View Users</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/dashboard/usersmain/adduser">
+                            <NavLink className="nav-link" to="/main/dashboard/usersmain/adduser">
                                 <i className="nc-icon nc-circle-09"></i>
                                 <p>Add User</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/dashboard/usersmain/edituser">
+                            <NavLink className="nav-link" to="/main/dashboard/usersmain/edituser">
                                 <i className="nc-icon nc-circle-09"></i>
                                 <p>Edit User</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/dashboard/usersmain/searchuser">
+                            <NavLink className="nav-link" to="/main/dashboard/usersmain/searchuser">
                                 <i className="nc-icon nc-circle-09"></i>
                                 <p>Search User</p>
                             </NavLink>
@@ -42,10 +42,10 @@ class Usermain extends Component{
                 </div>
                 <div className="col-md-10">
                 <Switch>
-                    <Route path="/dashboard/usersmain/viewusers" component={viewusers}/>
-                    <Route path="/dashboard/usersmain/adduser" component={adduser}/>
-                    <Route path="/dashboard/usersmain/edituser" component={edituser}/>
-                    <Route path="/dashboard/usersmain/searchuser" component={searchuser}/>
+                    <Route path="/main/dashboard/usersmain/viewusers" component={viewusers}/>
+                    <Route path="/main/dashboard/usersmain/adduser" component={adduser}/>
+                    <Route path="/main/dashboard/usersmain/edituser" component={edituser}/>
+                    <Route path="/main/dashboard/usersmain/searchuser" component={searchuser}/>
                 </Switch>
                 </div>
             </div>

@@ -10,7 +10,7 @@ class Dashboard extends Component {
             <nav className="navbar navbar-expand-lg navbar-light bg-navbar navbar-expand-lg navbar-light bg-dark">
              <ul className="navbar-nav mr-auto">   
              <li className="nav-item mx-5">
-                <Link to="/dashboard/usersmain">Users</Link>
+                <Link to="/main/dashboard/usersmain">Users</Link>
             </li>
             <li className="nav-item mx-5">
                 <Link to="/">Roles</Link>
@@ -22,7 +22,7 @@ class Dashboard extends Component {
             </nav> 
             
             <div className="col-md-12">
-                <Route path="/dashboard/usersmain" component={Usermain}/>
+                <Route path="/main/dashboard/usersmain" component={Usermain}/>
             </div>
         
           {/* <div className="col-md-9">

@@ -73,7 +73,11 @@ class viewusers extends Component{
                 <Button onClick={() => this.fetchAllUsers(page - 1)} type="button" className="btn btn-success">
                     PreviousRecord
                 </Button>  
-                {error ? <p>Something went wrong, fetching records from Server</p> : null}
+                {  error? 
+                    <div className="alert alert-danger" role="alert">
+                    <p>Error fetching  records Server might be down</p>
+                  </div> : null
+                }
                 { result ?
                         <Table list={result.content} pattern={searchUser} onDelete={this.onDelete} onDisableUsers={this.onDisableUsers} onCheckboxSelected={this.onCheckboxSelected} checboxsetState={checked}/>
                 : null

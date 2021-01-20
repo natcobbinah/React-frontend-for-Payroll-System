@@ -13,13 +13,13 @@ class Sidebar extends Component{
                     </div>
                     <ul className="nav">
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/dashboard">
+                            <NavLink className="nav-link" to="/main/dashboard">
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>Dashboard</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/profile">
+                            <NavLink className="nav-link" to="/main/profile">
                                 <i className="nc-icon nc-circle-09"></i>
                                 <p>User Profile</p>
                             </NavLink>

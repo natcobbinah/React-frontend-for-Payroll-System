@@ -4,16 +4,18 @@ import Footer from './Footer'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import Dashboard from './Dashboard'
 import UserProfile from './UserProfile'
+import Sidebar from './Sidebar' 
 
 class Main extends Component{
     render(){
         return(
-            <div className="main-panel">
+            <div className="container">
+                <Sidebar/>
                 <Navbar/>
                 <Switch>
-                    <Route path="/dashboard" component={Dashboard}/>
-                    <Route path="/profile" component={UserProfile}/>
-                    <Redirect from="*" to="/dashboard"/>
+                    <Route path="/main/dashboard" component={Dashboard}/>
+                    <Route path="/main/profile" component={UserProfile}/>
+                    <Redirect from="*" to="/main/dashboard"/>
                 </Switch>
                {/*  <Footer/>  */}
             </div>    

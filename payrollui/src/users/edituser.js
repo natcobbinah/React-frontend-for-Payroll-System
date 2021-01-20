@@ -9,12 +9,35 @@ class edituser extends Component{
         this.state = {
             searchUser:'',
             result: null,
-            error:null
+            error:null,
+
+            //user records to  edit
+            address:'',
+            city:'',
+            email:'',
+            employeeid:'',
+            employeelevel:'',
+            enabled: true,
+            password:'',
+            phonenumber:'',
+            bankaccountnumber:'',
+            birthdate:'',
+            gender:'',
+            hiredate:'',
+            maritalstatus:'',
+            birthcertid:'',
+            driverslicenseid:'',
+            passportid:'',
+            ssnitid:'',
+            votersid:'',
+            name:'',
         }
 
         this.onSearchChange = this.onSearchChange.bind(this);
         this.onSearchSubmit = this.onSearchSubmit.bind(this);
         this.fetchAllUsersByName = this.fetchAllUsersByName.bind(this);
+        this.handleUserUpdateBtnClick = this.handleUserUpdateBtnClick.bind(this);
+        this.onTextFieldChange = this.onTextFieldChange.bind(this);
     }
 
     //'http://localhost:2345/v1/test/user/{name}';
@@ -30,25 +53,43 @@ class edituser extends Component{
        })
    }
 
-   //fetches from the server via the apiURL fetch function
+   //fetches from the server via the apiURL axios function
    onSearchSubmit(event){
         const{searchUser}= this.state;
         this.fetchAllUsersByName(searchUser);
         event.preventDefault();
+    }
+
+   handleUserUpdateBtnClick(){
+       
+   }
+
+   onTextFieldChange(event){
+
    }
 
     render(){
-        const{searchUser,result,error} = this.state;
-        if(error){
+        const{searchUser,result,error,
+        
+            //user data variables
+            address,city,email,employeeid,employeelevel,enabled,password,phonenumber,bankaccountnumber,birthdate,gender,hiredate,maritalstatus,
+            birthcertid,driverslicenseid,passportid,ssnitid,votersid,name
+        } = this.state;
+        /* if(error){
             return <p>Something went wrong</p>
-        }
+        } */
         return(
             <div className="container-fluid mt-3">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <Search value={searchUser} onChange={this.onSearchChange} onSubmit={this.onSearchSubmit}>Search</Search>
                 </nav>
+                {  error? 
+                    <div className="alert alert-danger" role="alert">
+                    <p>Error fetching user record Server might be down</p>
+                  </div> : null
+                }
                 {result ?
-                <DisplayUserForm list={result}/>
+                <DisplayUserForm list={result}  name={name}  onClick={this.handleUserUpdateBtnClick} onChange={this.onTextFieldChange}/>
                 : null}
             </div>
         );
@@ -69,7 +110,10 @@ class Search extends Component{
 
 class DisplayUserForm extends Component{
     render(){
-        const{list} = this.props;
+        const{list, onClick, onChange,
+        //user data variables
+        name
+        } = this.props;
         return(  
             <div>
                <form> 
@@ -77,7 +121,7 @@ class DisplayUserForm extends Component{
                     <div>
                     <div className="form-group">
                         <label htmlFor="fullnamelbl">Name</label>
-                        <input type="text" value={user.name} className="form-control" id="fullnamelbl" placeholder="FullName here...."/>
+                        <input type="text" value={user.name} className="form-control" id="fullnamelbl" placeholder="FullName here...." onChange={(event) => this.setState({name: event.target.value})}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="addresslbl">Address</label>
@@ -162,7 +206,7 @@ class DisplayUserForm extends Component{
                     </div>
                     <div className="form-row">
                        <div className="form-group col-md-12">
-                            <button type="button" className="btn btn-primary">Update User Details</button>
+                            <button type="button" className="btn btn-primary" onClick={onClick}>Update User Details</button>
                         </div>
                     </div>
                     </div>
