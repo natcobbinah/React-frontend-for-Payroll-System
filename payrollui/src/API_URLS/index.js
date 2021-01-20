@@ -9,3 +9,6 @@ export const PATH_ADDUSER  = 'http://localhost:2345/v1/test/user';
 export const PARAM_PAGE = 'page=';
 //export const PATH_ADDUSER  = 'http://localhost:2345/v1/test/user/{name}';
 export const PATH_FINDUSERBY_EMAIL = 'http://localhost:2345/v1/test/useremail';
+export const PATH_GET_DEPARTMENT = 'http://localhost:2345/v1/test/departments';
+export const PATH_ADD_DEPARTMENT = 'http://localhost:2345/v1/test/departments';
+export const PATH_DELETE_DEPARTMENT = 'http://localhost:2345/v1/test/deletedepartment';

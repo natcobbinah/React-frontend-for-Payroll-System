@@ -67,12 +67,12 @@ class viewusers extends Component{
         return(
             <div>
                 <Search value={searchUser} onChange={this.onSearchChange}>Search</Search>
-                <Button onClick={() => this.fetchAllUsers(page + 1)} type="button" className="btn btn-primary">
-                    NextRecord
-                </Button>
                 <Button onClick={() => this.fetchAllUsers(page - 1)} type="button" className="btn btn-success">
                     PreviousRecord
                 </Button>  
+                <Button onClick={() => this.fetchAllUsers(page + 1)} type="button" className="btn btn-primary">
+                    NextRecord
+                </Button>
                 {  error? 
                     <div className="alert alert-danger" role="alert">
                     <p>Error fetching  records Server might be down</p>

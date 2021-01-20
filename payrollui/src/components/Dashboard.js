@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Link } from 'react-router-dom'
 import {Route} from 'react-router-dom'
 import Usermain from '../users/Usermain'
+import DepartmentMain from '../departments/departmentmain'
 
 class Dashboard extends Component {
   render() {
@@ -16,13 +17,17 @@ class Dashboard extends Component {
                 <Link to="/">Roles</Link>
             </li>
             <li className="nav-item mx-5">
-                <Link to="/">Department</Link>
+                <Link to="/main/dashboard/department">Department</Link>
+            </li>
+            <li className="nav-item mx-5">
+                <Link to="/main/dashboard/benefits">Benefits</Link>
             </li>
             </ul>
             </nav> 
             
             <div className="col-md-12">
                 <Route path="/main/dashboard/usersmain" component={Usermain}/>
+                <Route path="/main/dashboard/department" component={DepartmentMain}/>
             </div>
         
           {/* <div className="col-md-9">
