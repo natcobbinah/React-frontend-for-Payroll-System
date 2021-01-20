@@ -33,6 +33,11 @@ class Loginform extends Component{
           ssnitid:'',
           votersid:'',
           name:'',
+          tier2: '',
+          tinnumber:'',
+          marriagecertid:'',
+          usercreator:'Google',
+
           postRecordSuccess:null,
 
           //basic auth with springsecurity
@@ -68,7 +73,7 @@ class Loginform extends Component{
         //get email,name and googleId from response and
         const{googlename,googletoken,googleProviderId,error,postRecordSuccess,
           address,city,email,employeeid,employeelevel,enabled,password,phonenumber,bankaccountnumber,birthdate,
-          gender,hiredate,maritalstatus,birthcertid,driverslicenseid,passportid,ssnitid,votersid,name
+          gender,hiredate,maritalstatus,birthcertid,driverslicenseid,passportid,ssnitid,votersid,name,usercreator
         } = this.state;
 
         const headers = { 'content-type': 'application/json'};
@@ -109,6 +114,11 @@ class Loginform extends Component{
               ssnitid: '',
               votersid:'',
               name: googleName,
+              tier2: '',
+              tinnumber:'',
+              marriagecertid:'',
+              usercreator:usercreator,
+             
           },
           headers: headers
       })
