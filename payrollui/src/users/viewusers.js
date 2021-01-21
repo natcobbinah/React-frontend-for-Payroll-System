@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {PATH_BASE,PATH_DELETEUSER,PARAM_DELETE
-    ,PARAM_PAGE,PATH_VIEW_USERDEPARTMENTS} from '../API_URLS';
+    ,PARAM_PAGE,PATH_SENDLOGINDETAILS,PATH_LOGINMESSAGE} from '../API_URLS';
 
 const searchedForRecord = searchUser => user =>
     user.name.toLowerCase().includes(searchUser.toLowerCase());
@@ -17,6 +17,10 @@ class viewusers extends Component{
             userstoDisable: [],
             checked:false,
 
+            //email message
+            loginsentSuccess:null,
+            loginsetnFailure:null,
+
             //user department variables
             resultonDeptfetchSuccess:null,
             resultonDeptfetchError:null,
@@ -28,7 +32,6 @@ class viewusers extends Component{
         this.onSearchChange = this.onSearchChange.bind(this);
         this.onCheckboxSelected = this.onCheckboxSelected.bind(this);
         this.onSendLoginDetails = this.onSendLoginDetails.bind(this);
-        this.onViewUserDepartment = this.onViewUserDepartment.bind(this);
     }
 
     onSearchChange(event){
@@ -64,14 +67,14 @@ class viewusers extends Component{
         this.componentDidMount();
     }
 
-    onSendLoginDetails(id){
-
-    }
-
-    onViewUserDepartment(id){
-        axios.get(`${PATH_VIEW_USERDEPARTMENTS}/${id}`)
-        .then(resultonDeptfetchSuccess => this.setState({resultonDeptfetchSuccess: resultonDeptfetchSuccess.data}))
-        .catch(resultonDeptfetchError => this.setState({resultonDeptfetchError}));
+    //'/test/sendemail/{to}/{subject}/{message}'
+    onSendLoginDetails(email,password){
+        const{loginsetnFailure} = this.state;
+        axios.get(`${PATH_SENDLOGINDETAILS}/${email}/${PATH_LOGINMESSAGE}/${password}`)
+        .then(loginsentSuccess => this.setState({loginsentSuccess: loginsentSuccess.data}))
+        .catch(loginsetnFailure => this.setState({loginsetnFailure}))
+        
+        console.log(loginsetnFailure);
     }
 
     componentDidMount(){
@@ -79,8 +82,7 @@ class viewusers extends Component{
     }
     
     render(){
-        const{searchUser,error,page = 0,result,checked,resultonDeptfetchError,
-            resultonDeptfetchSuccess} = this.state;
+        const{searchUser,error,page = 0,result,checked,loginsentSuccess,loginsetnFailure} = this.state;
         return(
             <div>
                 <Search value={searchUser} onChange={this.onSearchChange}>Search</Search>
@@ -96,17 +98,22 @@ class viewusers extends Component{
                   </div> : null
                 }
 
-                {resultonDeptfetchSuccess?
-                  resultonDeptfetchSuccess.map(department => {
-                     console.log(department);
-                  })
-                   :null
+                { loginsetnFailure? 
+                    <div className="alert alert-danger" role="alert">
+                    <p>Error sending login details</p>
+                  </div> : null
+                }
+
+                { loginsentSuccess? 
+                    <div className="alert alert-success" role="alert">
+                    <p>Login details sent successfully</p>
+                  </div> : null
                 }
 
                 { result ?
                         <Table list={result.content} pattern={searchUser} onDelete={this.onDelete} onDisableUsers={this.onDisableUsers} 
                         onCheckboxSelected={this.onCheckboxSelected} checboxsetState={checked} onSendLoginDetails={this.onSendLoginDetails}
-                        onViewUserDepartment={this.onViewUserDepartment}/>
+                       />
                 : null
                 }   
             </div>
@@ -128,7 +135,7 @@ class Search extends Component{
 class Table extends Component{
     render(){
         const{pattern,list,onDelete,onDisableUsers,onCheckboxSelected,checboxsetState,onSendLoginDetails,
-            onViewUserDepartment} = this.props;
+            } = this.props;
         return(
             <div className="table-responsive table-hover table-striped">
                 <table className="table">
@@ -144,8 +151,8 @@ class Table extends Component{
                          <th scope="col"></th>
                          <th scope="col">ACTION</th>
                          <th scope="col">ACTION</th>
-                         <th scope="col">VIEW DEPTS</th>
-                         <th scope="col">VIEW ROLES</th>
+                         <th scope="col">ACTION</th>
+                         <th scope="col">ACTION</th>
                          <th scope="col">ACTION</th>
                         </tr>
                      </thead>
@@ -168,22 +175,22 @@ class Table extends Component{
                               </Button>
                           </td>
                           <td>
+                              <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-success">
+                                Enable
+                              </Button>
+                          </td>
+                          <td>
+                              <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-success">
+                                Edit
+                              </Button>
+                          </td>
+                          <td>
                               <Button onClick={() => onDelete(user.id)} type="button" className="btn btn-danger">
                                 Delete
                               </Button>
                           </td>
                           <td>
-                              <Button onClick={() => onViewUserDepartment(user.id)} type="button" className="btn btn-danger">
-                                Department
-                              </Button>
-                          </td>
-                          <td>
-                              <Button onClick={() => onSendLoginDetails(user.id)} type="button" className="btn btn-danger">
-                                Roles
-                              </Button>
-                          </td>
-                          <td>
-                              <Button onClick={() => onSendLoginDetails(user.id)} type="button" className="btn btn-danger">
+                              <Button onClick={() => onSendLoginDetails(user.email,user.password)} type="button" className="btn btn-danger">
                                 SendLoginDetails
                               </Button>
                           </td>

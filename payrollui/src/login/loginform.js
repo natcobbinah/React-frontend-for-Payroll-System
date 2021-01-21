@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
 import {PATH_FINDUSERBY_EMAIL,PATH_ADDUSER} from '../API_URLS';
+import './loginform.css'
 
 class Loginform extends Component{
   //to cater for no-op warning when axios operations
@@ -64,6 +65,7 @@ class Loginform extends Component{
       event.preventDefault();
       const{email,password} = this.state;
       console.log(email + ":" + password );
+      this.props.history.push("/main")  
     }
 
     signUpUserIfnotINDB(response){
@@ -148,12 +150,12 @@ class Loginform extends Component{
       }
       
       return(
-        <div className="container-fluid">
-             <div className="container-fluid mt-5 pt-5">
-                <div className="row">
-                    <div className="col-md-3"></div>
-                    <div className="col-md-6">
-                    <GoogleLogin clientId={clientId} buttonText={buttonText}
+        <div className="container-fluid  rowSidenav">
+          <div className="row rowSidenav">
+          <div className="col-md-3 sidebarlogin"></div>
+          <div className="col-md-2"></div>
+          <div className="col-md-4 mt-5 mx-4">
+            <GoogleLogin clientId={clientId} buttonText={buttonText}
                            onSuccess={onGoogleLoginSuccess}
                            onFailure={onGoogleLoginFailure}/>
                      <form>
@@ -170,19 +172,11 @@ class Loginform extends Component{
                         <button type="submit" className="btn btn-primary" onClick={this.handleLoginSubmit}>Login</button>
                     </div>
                     </form>
-                    </div>
-                    <div className="col-md-3"></div>
-                </div> 
-                </div>
+            </div>
+          </div>
         </div>
       );
     }
 }
-
- {/*   <GoogleLogin
-                clientId={clientId}
-                buttonText={buttonText}
-                onSuccess={onSuccessResponse}
-                onFailure={onFailureResponse} ></GoogleLogin> */}
 
 export default Loginform

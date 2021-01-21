@@ -10,7 +10,6 @@ class App extends Component {
     return(
       <div className="wrapper">
           <BrowserRouter>
-              {/*  <Sidebar/>    */}
                <Switch>
                   <Route exact path='/' component={Loginform}/>
                   <Route path="/main" component={Main}/>

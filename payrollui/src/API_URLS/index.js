@@ -20,3 +20,6 @@ export const PATH_ADD_ROLE = 'http://localhost:2345/v1/test/role';
 export const PATH_PATCH_EDIT_ROLE = 'http://localhost:2345/v1/test/role';
 
 export const PATH_VIEW_USERDEPARTMENTS = 'http://localhost:2345/v1/test/userdepartment';
+
+export const PATH_SENDLOGINDETAILS = 'http://localhost:2345/v1/test/sendemail';
+export const PATH_LOGINMESSAGE = 'Login with your email and your password is';
