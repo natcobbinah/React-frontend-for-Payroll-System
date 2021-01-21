@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import axios from 'axios'
 import { Switch, Route,NavLink} from 'react-router-dom'
 import ViewDepartment from './viewdepartments'
-import EditDepartment from './editdepartment';
 import AddDepartment from './addDepartment'
+import AssignDepartment from './assignDepartment'
 
 class DepartmentMain extends Component{
     render(){
@@ -24,17 +24,17 @@ class DepartmentMain extends Component{
                         </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink className="nav-link" to="/main/dashboard/department/editdepartment">
+                        <NavLink className="nav-link" to="/main/dashboard/department/assignDepartment">
                             <i className="nc-icon nc-circle-09"></i>
-                            <p>Edit Department</p>
+                            <p>Assign Department</p>
                         </NavLink>
                     </li>
             </div>
             <div className="col-md-10">
             <Switch>
                 <Route path="/main/dashboard/department/viewdepartment" component={ViewDepartment}/>
-                <Route path="/main/dashboard/department/editdepartment" component={EditDepartment}/>
                 <Route path="/main/dashboard/department/adddepartment" component={AddDepartment}/>
+                <Route path="/main/dashboard/department/assignDepartment" component={AssignDepartment}/>
             </Switch>
             </div>
         </div>

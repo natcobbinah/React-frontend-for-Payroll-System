@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {PATH_BASE,PATH_DELETEUSER,PARAM_DELETE
-    ,PARAM_PAGE} from '../API_URLS';
+    ,PARAM_PAGE,PATH_VIEW_USERDEPARTMENTS} from '../API_URLS';
 
 const searchedForRecord = searchUser => user =>
     user.name.toLowerCase().includes(searchUser.toLowerCase());
@@ -16,6 +16,10 @@ class viewusers extends Component{
             error:null,
             userstoDisable: [],
             checked:false,
+
+            //user department variables
+            resultonDeptfetchSuccess:null,
+            resultonDeptfetchError:null,
         }
 
         this.onDisableUsers = this.onDisableUsers.bind(this);
@@ -23,6 +27,8 @@ class viewusers extends Component{
         this.fetchAllUsers = this.fetchAllUsers.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
         this.onCheckboxSelected = this.onCheckboxSelected.bind(this);
+        this.onSendLoginDetails = this.onSendLoginDetails.bind(this);
+        this.onViewUserDepartment = this.onViewUserDepartment.bind(this);
     }
 
     onSearchChange(event){
@@ -58,12 +64,23 @@ class viewusers extends Component{
         this.componentDidMount();
     }
 
+    onSendLoginDetails(id){
+
+    }
+
+    onViewUserDepartment(id){
+        axios.get(`${PATH_VIEW_USERDEPARTMENTS}/${id}`)
+        .then(resultonDeptfetchSuccess => this.setState({resultonDeptfetchSuccess: resultonDeptfetchSuccess.data}))
+        .catch(resultonDeptfetchError => this.setState({resultonDeptfetchError}));
+    }
+
     componentDidMount(){
         this.fetchAllUsers();
     }
     
     render(){
-        const{searchUser,error,page = 0,result,checked} = this.state;
+        const{searchUser,error,page = 0,result,checked,resultonDeptfetchError,
+            resultonDeptfetchSuccess} = this.state;
         return(
             <div>
                 <Search value={searchUser} onChange={this.onSearchChange}>Search</Search>
@@ -78,8 +95,18 @@ class viewusers extends Component{
                     <p>Error fetching  records Server might be down</p>
                   </div> : null
                 }
+
+                {resultonDeptfetchSuccess?
+                  resultonDeptfetchSuccess.map(department => {
+                     console.log(department);
+                  })
+                   :null
+                }
+
                 { result ?
-                        <Table list={result.content} pattern={searchUser} onDelete={this.onDelete} onDisableUsers={this.onDisableUsers} onCheckboxSelected={this.onCheckboxSelected} checboxsetState={checked}/>
+                        <Table list={result.content} pattern={searchUser} onDelete={this.onDelete} onDisableUsers={this.onDisableUsers} 
+                        onCheckboxSelected={this.onCheckboxSelected} checboxsetState={checked} onSendLoginDetails={this.onSendLoginDetails}
+                        onViewUserDepartment={this.onViewUserDepartment}/>
                 : null
                 }   
             </div>
@@ -100,7 +127,8 @@ class Search extends Component{
 
 class Table extends Component{
     render(){
-        const{pattern,list,onDelete,onDisableUsers,onCheckboxSelected,checboxsetState} = this.props;
+        const{pattern,list,onDelete,onDisableUsers,onCheckboxSelected,checboxsetState,onSendLoginDetails,
+            onViewUserDepartment} = this.props;
         return(
             <div className="table-responsive table-hover table-striped">
                 <table className="table">
@@ -115,6 +143,9 @@ class Table extends Component{
                          <th scope="col">HireDate</th>
                          <th scope="col"></th>
                          <th scope="col">ACTION</th>
+                         <th scope="col">ACTION</th>
+                         <th scope="col">VIEW DEPTS</th>
+                         <th scope="col">VIEW ROLES</th>
                          <th scope="col">ACTION</th>
                         </tr>
                      </thead>
@@ -139,6 +170,21 @@ class Table extends Component{
                           <td>
                               <Button onClick={() => onDelete(user.id)} type="button" className="btn btn-danger">
                                 Delete
+                              </Button>
+                          </td>
+                          <td>
+                              <Button onClick={() => onViewUserDepartment(user.id)} type="button" className="btn btn-danger">
+                                Department
+                              </Button>
+                          </td>
+                          <td>
+                              <Button onClick={() => onSendLoginDetails(user.id)} type="button" className="btn btn-danger">
+                                Roles
+                              </Button>
+                          </td>
+                          <td>
+                              <Button onClick={() => onSendLoginDetails(user.id)} type="button" className="btn btn-danger">
+                                SendLoginDetails
                               </Button>
                           </td>
                         </tr>

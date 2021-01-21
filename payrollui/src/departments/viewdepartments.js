@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios'
-import {PATH_GET_DEPARTMENT,PARAM_PAGE,PATH_DELETE_DEPARTMENT} from '../API_URLS'
+import {PATH_GET_DEPARTMENT,PARAM_PAGE,PATH_DELETE_DEPARTMENT,PATH_PATCH_EDITDEPARTMENT} from '../API_URLS'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -27,12 +27,15 @@ class ViewDepartment extends Component{
 
             errorOndelete:null,
             resultOndelete:null,
+            onUpdateSuccess:null,
+            onUpdateError:null,
         }
 
         this.fetchAllDepartments = this.fetchAllDepartments.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.onEditDepartment = this.onEditDepartment.bind(this);
+        this.updateDepartment = this.updateDepartment.bind(this);
     }
 
     fetchAllDepartments(page = 0){
@@ -62,32 +65,72 @@ class ViewDepartment extends Component{
         })
     }
 
+    updateDepartment(){
+        const{id,departmentid,departmentname} = this.state;
+        //console.log(id + ":" + departmentid + " : " +departmentname)
+        const headers = { 'content-type': 'application/json'};
+        axios({
+            method: 'patch',
+            url: PATH_PATCH_EDITDEPARTMENT,
+            data: {
+                id: id,
+                departmentid:departmentid,
+                departmentname: departmentname,
+            },
+            headers: headers
+        })
+        .then(onUpdateSuccess => this.setState({onUpdateSuccess: onUpdateSuccess.data}))
+        .catch(onUpdateError => this.setState({onUpdateError}));
+        
+        this.fetchAllDepartments();
+    }
+
     componentDidMount(){
         this.fetchAllDepartments();
     }
 
     render(){
         const{result,error,page=0,searchDepartment,
-            resultOndelete,errorOndelete,id,departmentid,departmentname
+            resultOndelete,errorOndelete,id,departmentid,departmentname,onUpdateSuccess,onUpdateError
         } = this.state;
         return(
           <div className="container-fluid mt-2">
                 <Search value={searchDepartment} onChange={this.onSearchChange}>Search</Search>
                 
+                {id ?
                 <div className="row">
                     <div className="col-md-6">
                         <form>
-                         <div className="form-group">
+                        {/*  <div className="form-group">
                             <label htmlFor="idlbl">ID</label>
                             <input type="text" className="form-control" id="idlbl" value={id} onChange={(e) => this.setState({id : e.target.value})}/>
-                          </div>
+                          </div> */}
                           <div className="form-group">
                             <label htmlFor="deptidlbl">Department_Code</label>
-                            <input type="text" className="form-control" id="deptidlbl" value={id} onChange={(e) => this.setState({id : e.target.value})}/>
+                            <input type="text" className="form-control" id="deptidlbl" value={departmentid} onChange={(e) => this.setState({departmentid : e.target.value})}/>
                           </div>
+                          <div className="form-group">
+                            <label htmlFor="deptnamelbl">Department_Name</label>
+                            <input type="text" className="form-control" id="deptnamelbl" value={departmentname} onChange={(e) => this.setState({departmentname : e.target.value})}/>
+                          </div>
+                          <button type="button" className="btn btn-primary" onClick={this.updateDepartment}>Update</button>
                         </form>
                     </div>
                 </div>
+                  : null
+                }
+
+                {onUpdateSuccess?
+                    <div className="alert alert-success" role="alert">
+                      <p>Department updated Successfully</p>
+                    </div> : null
+                }
+
+                {onUpdateError?
+                    <div className="alert alert-danger" role="alert">
+                      <p>Error updating department</p>
+                    </div> : null
+                } 
 
                 <div className="row">
                     <div className="col-md-6 my-3">
