@@ -64,7 +64,7 @@ class ViewRoles extends Component{
         .then(onUpdateSuccess => this.setState({onUpdateSuccess: onUpdateSuccess.data}))
         .catch(onUpdateError => this.setState({onUpdateError}));
         
-        this.fetchAllRoles();
+        this.componentDidMount();
     }
 
     componentDidMount(){
@@ -90,11 +90,13 @@ class ViewRoles extends Component{
                 {role_id ?
                   <div className="row">
                   <form>
-                      {/* <label htmlFor="id">RoleID</label>
+                      {/* <label htmlFor="id">RoleID</ label>
                       <input type="text" value={role_id} onChange={(e) => this.setState({role_id : e.target.value})}/> */}
-                      <label htmlFor="rolename">Rolename</label>
-                      <input type="text" value={role_name} onChange={(e) => this.setState({role_name : e.target.value})}/>
-                      <button type="button" onClick={this.updateRole}>Update</button>
+                    <div className="form-group">
+                        <label htmlFor="rolename">Rolename</label>
+                        <input type="text" value={role_name} onChange={(e) => this.setState({role_name : e.target.value})}/>
+                        <button type="button" className="btn btn-primary" onClick={this.updateRole}>Update</button>
+                    </div>
                   </form>
                 </div> 
                  : null

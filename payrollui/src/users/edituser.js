@@ -66,9 +66,6 @@ class edituser extends Component{
 
     render(){
         const{searchUser,result,error} = this.state;
-        /* if(error){
-            return <p>Something went wrong</p>
-        } */
         return(
             <div className="container-fluid mt-3">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -109,98 +106,128 @@ class DisplayUserForm extends Component{
                     <div>
                     <div className="form-group">
                         <label htmlFor="fullnamelbl">Name</label>
-                        <input type="text" defaultValue={user.name}  className="form-control" id="fullnamelbl" placeholder="FullName here...." onChange={(event) => this.setState({name: event.target.value})}/>
+                        <input type="text" value={user.name}  className="form-control" id="fullnamelbl" placeholder="FullName here...." onChange={(event) => this.setState({name: event.target.value})}/>
                     </div>
                      <div className="form-group">
                         <label htmlFor="addresslbl">Address</label>
-                        <input type="text"  defaultValue={user.address} className="form-control" id="addresslbl" placeholder="Address here...."/>
+                        <input type="text"  value={user.address} className="form-control" id="addresslbl" placeholder="Address here...."/>
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-6">
                           <label htmlFor="emaillbl">Email</label>
-                          <input type="email" defaultValue={user.email} className="form-control" id="emaillbl" placeholder="Email here.."/>
+                          <input type="email" value={user.email} className="form-control" id="emaillbl" placeholder="Email here.."/>
                         </div>
                         <div className="form-group col-md-6">
                           <label htmlFor="passwordlbl">Password</label>
-                          <input type="password" defaultValue={user.password} className="form-control" id="passwordlbl" placeholder="*********"/>
+                          <input type="password" value={user.password} className="form-control" id="passwordlbl" placeholder="*********"/>
                         </div>
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-6">
                           <label htmlFor="genderlbl">Gender</label>
-                          <input type="text" defaultValue={user.gender} className="form-control" id="genderlbl" placeholder="Gender"/>
+                          <input type="text" value={user.gender} className="form-control" id="genderlbl" placeholder="Gender"/>
                         </div>
                         <div className="form-group col-md-6">
                           <label htmlFor="dateofbirthlbl">Date of Birth</label>
-                          <input type="date" defaultValue={user.birthdate} className="form-control" id="dateofbirthlbl"/>
+                          <input type="date" value={user.birthdate} className="form-control" id="dateofbirthlbl"/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <div className="form-group col-md-4">
                             <label htmlFor="citylbl">City</label>
-                            <input type="text" defaultValue={user.city} className="form-control" id="citylbl" placeholder="City name here..."/>
+                            <input type="text" value={user.city} className="form-control" id="citylbl" placeholder="City name here..."/>
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="phonenumberlbl">PhoneNumber</label>
-                            <input type="text" defaultValue={user.phonenumber} className="form-control" id="phonenumberlbl" placeholder="Phoneno here..."/>
+                            <input type="text" value={user.phonenumber} className="form-control" id="phonenumberlbl" placeholder="Phoneno here..."/>
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="maritalstatuslbl">Marital Status</label>
-                            <input type="text" defaultValue={user.maritalstatus} className="form-control" id="maritalstatuslbl" placeholder="Status here.."/>
+                            <input type="text" value={user.maritalstatus} className="form-control" id="maritalstatuslbl" placeholder="Status here.."/>
                         </div>
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-4">
                             <label htmlFor="employeeidlbl">EmployeeID</label>
-                            <input type="text" defaultValue={user.employeeid} className="form-control" id="employeeidlbl" placeholder="EmployeeID here.."/>
+                            <input type="text" value={user.employeeid} className="form-control" id="employeeidlbl" placeholder="EmployeeID here.."/>
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="employeelvlbl">Employee Level</label>
-                            <input type="text" defaultValue={user.employeelevel} className="form-control" id="employeelvlbl" placeholder="Position"/>
+                            <input type="text" value={user.employeelevel} className="form-control" id="employeelvlbl" placeholder="Position"/>
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="hiredatelbl">HireDate</label>
-                            <input type="date" defaultValue={user.hiredate} className="form-control" id="hiredatelbl"/>
+                            <input type="date" value={user.hiredate} className="form-control" id="hiredatelbl"/>
                         </div>
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-4">
                             <label htmlFor="bankaccnolbl">BankAccountNo</label>
-                            <input type="text" defaultValue={user.bankaccountnumber} className="form-control" id="bankaccnolbl" placeholder="356456453563"/>
+                            <input type="text" value={user.bankaccountnumber} className="form-control" id="bankaccnolbl" placeholder="356456453563"/>
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="ssnitlbl">SSNIT_ID</label>
-                            <input type="text" defaultValue={user.ssnitid} className="form-control" id="ssnitlbl" placeholder="25452354525"/>
+                            <input type="text" value={user.ssnitid} className="form-control" id="ssnitlbl" placeholder="25452354525"/>
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="votersidlbl">VotersID</label>
-                            <input type="text" defaultValue={user.votersid} className="form-control" id="votersidlbl"/>
+                            <input type="text" value={user.votersid} className="form-control" id="votersidlbl"/>
                         </div>
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-4">
                             <label htmlFor="birthcertidlbl">BirthCertificate</label>
-                            <input type="text" defaultValue={user.birthcertid} className="form-control" id="birthcertidlbl" placeholder="356456453563"/>
+                            <input type="text" value={user.birthcertid} className="form-control" id="birthcertidlbl" placeholder="356456453563"/>
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="driverslicenlbl">DriversLicense</label>
-                            <input type="text" defaultValue={user.driverslicenseid} className="form-control" id="driverslicenlbl" placeholder="25452354525"/>
+                            <input type="text" value={user.driverslicenseid} className="form-control" id="driverslicenlbl" placeholder="25452354525"/>
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="passportlbl">PassportNo</label>
-                            <input type="text" defaultValue={user.passportid} className="form-control" id="passportlbl"/>
+                            <input type="text" value={user.passportid} className="form-control" id="passportlbl"/>
                         </div>
                     </div>
                     <div className="form-row">
-                       <div className="form-group col-md-12">
-                            <button type="button" className="btn btn-primary" onClick={onClick}>Update User Details</button>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="tinnolbl">Tin Number</label>
+                            <input type="text" value={user.tinnumber} className="form-control" id="tinnolbl" placeholder="25452354525" onChange={(e) => this.setState({tinnumber : e.target.value})}/>
+                        </div>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="marriagecertID">Marriage CertificateID</label>
+                            <input type="text" value={user.marriagecertid} className="form-control" id="marriagecertID" onChange={(e) => this.setState({marriagecertid : e.target.value})}/>
+                        </div>
+                    </div>
+                    <div className="form-row">
+                       <div className="form-group col-md-4"></div>
+                       <div className="form-group col-md-8">
+                         <ButtonCustom onClick={onClick} type="button" className="btn btn-success mx-1">
+                              Update User Details
+                          </ButtonCustom>
+                          <ButtonCustom onClick={onClick} type="button" className="btn btn-success mx-1">
+                              Delete User
+                          </ButtonCustom>
+                          <ButtonCustom onClick={onClick} type="button" className="btn btn-success">
+                              Send Login Credentials
+                          </ButtonCustom>
                         </div>
                     </div> 
                     </div>
                     )} 
                 </form> 
                 </div>
+        );
+    }
+}
+
+class ButtonCustom extends Component{
+    render(){
+        const{onClick, className,type,children}=this.props;
+        return(
+            <button onClick={onClick} type={type} className={className}>
+            {children}
+           </button>
         );
     }
 }

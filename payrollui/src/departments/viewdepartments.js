@@ -14,6 +14,11 @@ class ViewDepartment extends Component{
         super(props);
 
         this.state = {
+            //values to edit on edit clicked
+            id: '',
+            departmentid: '',
+            departmentname: '',
+
             //variable for filtering
             searchDepartment: '',
             //response from axios post and get
@@ -27,6 +32,7 @@ class ViewDepartment extends Component{
         this.fetchAllDepartments = this.fetchAllDepartments.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
         this.onDelete = this.onDelete.bind(this);
+        this.onEditDepartment = this.onEditDepartment.bind(this);
     }
 
     fetchAllDepartments(page = 0){
@@ -48,25 +54,48 @@ class ViewDepartment extends Component{
         this.fetchAllDepartments();
     }
 
+    onEditDepartment(id,deptid,name){
+        this.setState({
+            id: id,
+            departmentid:deptid,
+            departmentname: name,
+        })
+    }
+
     componentDidMount(){
         this.fetchAllDepartments();
     }
 
     render(){
         const{result,error,page=0,searchDepartment,
-            resultOndelete,errorOndelete
+            resultOndelete,errorOndelete,id,departmentid,departmentname
         } = this.state;
         return(
           <div className="container-fluid mt-2">
                 <Search value={searchDepartment} onChange={this.onSearchChange}>Search</Search>
-
+                
                 <div className="row">
                     <div className="col-md-6">
+                        <form>
+                         <div className="form-group">
+                            <label htmlFor="idlbl">ID</label>
+                            <input type="text" className="form-control" id="idlbl" value={id} onChange={(e) => this.setState({id : e.target.value})}/>
+                          </div>
+                          <div className="form-group">
+                            <label htmlFor="deptidlbl">Department_Code</label>
+                            <input type="text" className="form-control" id="deptidlbl" value={id} onChange={(e) => this.setState({id : e.target.value})}/>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-6 my-3">
                     <ButtonCustom onClick={() => this.fetchAllDepartments(page - 1)} type="button" className="btn btn-success">
                         PreviousRecord
                     </ButtonCustom>  
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6 my-3">
                     <ButtonCustom onClick={() => this.fetchAllDepartments(page + 1)} type="button" className="btn btn-primary">
                       NextRecord
                    </ButtonCustom>  
@@ -92,7 +121,7 @@ class ViewDepartment extends Component{
                   }
 
                  {result?
-                    <Table list={result.content} pattern={searchDepartment} onDelete={this.onDelete}/>
+                    <Table list={result.content} pattern={searchDepartment} onDelete={this.onDelete} onEditDepartment={this.onEditDepartment}/>
                     :
                     null
                 } 
@@ -104,7 +133,7 @@ class ViewDepartment extends Component{
 
 class Table extends Component{
     render(){
-        const{list,pattern,onDelete} = this.props;
+        const{list,pattern,onDelete,onEditDepartment} = this.props;
         return(
             <div className="table-responsive table-hover table-striped">
             <table className="table">
@@ -121,6 +150,9 @@ class Table extends Component{
                       <td>{department.departmentid}</td>
                       <td>{department.departmentname}</td>
                       <td>
+                        <ButtonCustom onClick={() => onEditDepartment(department.id,department.departmentid,department.departmentname)} type="button" className="btn btn-success mx-2">
+                                Edit
+                        </ButtonCustom>
                         <ButtonCustom onClick={() => onDelete(department.id)} type="button" className="btn btn-danger">
                                 Delete
                         </ButtonCustom>

@@ -3,7 +3,6 @@ import { NavLink} from 'react-router-dom'
 import { Switch, Route} from 'react-router-dom'
 import AddRole from './addRole'
 import ViewRoles from './viewRoles'
-import EditRole from './editRole'
 
 class Rolesmain extends Component{
     render(){
@@ -23,18 +22,11 @@ class Rolesmain extends Component{
                                 <p>Add Role</p>
                             </NavLink>
                         </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/main/dashboard/roles/editRoles">
-                                <i className="nc-icon nc-circle-09"></i>
-                                <p>Edit Role</p>
-                            </NavLink>
-                        </li>
                 </div>
                 <div className="col-md-10">
                 <Switch>
                     <Route path="/main/dashboard/roles/viewRoles" component={ViewRoles}/>
                     <Route path="/main/dashboard/roles/addRoles" component={AddRole}/>
-                    <Route path="/main/dashboard/roles/editRoles" component={EditRole}/>
                 </Switch>
                 </div>
             </div>

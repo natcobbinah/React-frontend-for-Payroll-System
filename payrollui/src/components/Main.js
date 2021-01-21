@@ -9,15 +9,15 @@ import Sidebar from './Sidebar'
 class Main extends Component{
     render(){
         return(
-            <div className="container">
-                <Sidebar/>
+            <div>
+               {/*  <Sidebar/> */}
                 <Navbar/>
                 <Switch>
                     <Route path="/main/dashboard" component={Dashboard}/>
                     <Route path="/main/profile" component={UserProfile}/>
                     <Redirect from="*" to="/main/dashboard"/>
                 </Switch>
-               {/*  <Footer/>  */}
+                 {/* <Footer/>   */}
             </div>    
         );
     }

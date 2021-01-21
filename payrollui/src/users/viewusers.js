@@ -113,7 +113,9 @@ class Table extends Component{
                          <th scope="col">BankAccno</th>
                          <th scope="col">Gender</th>
                          <th scope="col">HireDate</th>
-                         <th scope="col">Action</th>
+                         <th scope="col"></th>
+                         <th scope="col">ACTION</th>
+                         <th scope="col">ACTION</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -133,6 +135,8 @@ class Table extends Component{
                               <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-success">
                                 Disable
                               </Button>
+                          </td>
+                          <td>
                               <Button onClick={() => onDelete(user.id)} type="button" className="btn btn-danger">
                                 Delete
                               </Button>

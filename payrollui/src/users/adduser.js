@@ -26,7 +26,6 @@ class adduser extends Component{
             ssnitid:'',
             votersid:'',
             name:'',
-            tier2: '',
             tinnumber:'',
             marriagecertid:'',
             usercreator:'',
@@ -41,7 +40,7 @@ class adduser extends Component{
     getFormDataandSavetoDB(){
         const{
             address,city,email,employeeid,employeelevel,enabled,password,phonenumber,bankaccountnumber,birthdate,
-            gender,hiredate,maritalstatus,birthcertid,driverslicenseid,passportid,ssnitid,votersid,name,tier2,tinnumber,
+            gender,hiredate,maritalstatus,birthcertid,driverslicenseid,passportid,ssnitid,votersid,name,tinnumber,
             marriagecertid,usercreator
         }=this.state;
 
@@ -69,7 +68,6 @@ class adduser extends Component{
                 passportid: passportid,
                 ssnitid: ssnitid,
                 votersid:votersid,
-                tier2: tier2,
                 tinnumber: tinnumber,
                 marriagecertid: marriagecertid,
                 usercreator: usercreator,
@@ -184,15 +182,11 @@ class adduser extends Component{
                         </div>
                     </div>
                     <div className="form-row">
-                        <div className="form-group col-md-4">
-                            <label htmlFor="tier2idlbl">Tier2</label>
-                            <input type="text" className="form-control" id="tier2idlbl" placeholder="356456453563" onChange={(e) => this.setState({tier2 : e.target.value})}/>
-                        </div>
-                        <div className="form-group col-md-4">
+                        <div className="form-group col-md-6">
                             <label htmlFor="tinnolbl">Tin Number</label>
                             <input type="text" className="form-control" id="tinnolbl" placeholder="25452354525" onChange={(e) => this.setState({tinnumber : e.target.value})}/>
                         </div>
-                        <div className="form-group col-md-4">
+                        <div className="form-group col-md-6">
                             <label htmlFor="marriagecertID">Marriage CertificateID</label>
                             <input type="text" className="form-control" id="marriagecertID" onChange={(e) => this.setState({marriagecertid : e.target.value})}/>
                         </div>
