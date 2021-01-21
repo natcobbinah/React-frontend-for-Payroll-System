@@ -15,3 +15,4 @@ export const PATH_DELETE_DEPARTMENT = 'http://localhost:2345/v1/test/deletedepar
 export const PATH_GET_ROLES = 'http://localhost:2345/v1/test/role';
 export const PATH_DELETE_ROLE = 'http://localhost:2345/v1/test/deleterole';
 export const PATH_ADD_ROLE = 'http://localhost:2345/v1/test/role';
+export const PATH_PATCH_EDIT_ROLE = 'http://localhost:2345/v1/test/role';
