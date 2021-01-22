@@ -1,5 +1,6 @@
 import React from 'react';
-import './modal.css'
+import './rolemodal.css'
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Modal =({handleClose,show,children}) =>{
     const showHideClassName = show ? "modal d-block" : "modal d-none";

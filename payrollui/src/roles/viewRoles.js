@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import axios from 'axios'
 import {PATH_GET_ROLES,PARAM_PAGE,PATH_DELETE_ROLE,PATH_PATCH_EDIT_ROLE} from '../API_URLS'
-
+import Modal from './Modal'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class ViewRoles extends Component{
@@ -19,6 +19,11 @@ class ViewRoles extends Component{
             errorOndelete:null,
             onUpdateSuccess:null,
             onUpdateError:null,
+
+            //modal attributes
+            modal: false,
+            name: '',
+            modalInputName: '',
         }
 
         this.fetchAllRoles = this.fetchAllRoles.bind(this);
@@ -45,11 +50,11 @@ class ViewRoles extends Component{
            role_id: id,
            role_name: name
        })
+       this.modalOpen();
     }
 
     updateRole(){
         const{role_id,role_name} = this.state;
-       // console.log(role_id +":" + role_name);
 
         const headers = { 'content-type': 'application/json'};
         axios({
@@ -64,7 +69,21 @@ class ViewRoles extends Component{
         .then(onUpdateSuccess => this.setState({onUpdateSuccess: onUpdateSuccess.data}))
         .catch(onUpdateError => this.setState({onUpdateError}));
         
-        this.componentDidMount();
+        this.fetchAllRoles();
+    }
+
+    modalOpen(){
+        this.setState({
+            modal: true
+        })
+    }
+
+    modalClose(){
+        this.setState({
+            role_id: '',
+            role_name: '',
+            modal: false,
+        })
     }
 
     componentDidMount(){
@@ -72,32 +91,33 @@ class ViewRoles extends Component{
     }
 
     render(){
-        const{result,error,page = 0, resultOndelete,errorOndelete,role_id,role_name,onUpdateSuccess,onUpdateError} = this.state;
+        const{result,error,page = 0, resultOndelete,errorOndelete,role_id,role_name,
+            onUpdateSuccess,onUpdateError,modal} = this.state;
         return(
             <div className="container-fluid">
                 {onUpdateSuccess?
-                    <div className="alert alert-success" role="alert">
-                      <p>Role updated Successfully</p>
+                    <div className="alert alert-sucess" role="alert">
+                     <p>Role updated successfully</p>
                     </div> : null
                 }
 
                 {onUpdateError?
-                    <div className="alert alert-danger" role="alert">
+                     <div className="alert alert-danger" role="alert">
                       <p>Error updating role</p>
                     </div> : null
                 }       
 
                 {role_id ?
                   <div className="row">
-                  <form>
-                      {/* <label htmlFor="id">RoleID</ label>
-                      <input type="text" value={role_id} onChange={(e) => this.setState({role_id : e.target.value})}/> */}
-                    <div className="form-group">
+                    <Modal show={modal} handleClose={e => this.modalClose(e)}>
+                     <div className="form-group">
                         <label htmlFor="rolename">Rolename</label>
-                        <input type="text" value={role_name} onChange={(e) => this.setState({role_name : e.target.value})}/>
+                        <input type="text" value={role_name} className="form-control" onChange={(e) => this.setState({role_name : e.target.value})}/>
+                     </div>
+                     <div className="form-group">
                         <button type="button" className="btn btn-primary" onClick={this.updateRole}>Update</button>
-                    </div>
-                  </form>
+                     </div>
+                   </Modal>                 
                 </div> 
                  : null
                 }
