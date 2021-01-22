@@ -5,6 +5,7 @@ import viewusers from './viewusers';
 import adduser from './adduser'
 import edituser from './edituser'
 import UserAdmin from './useradmin'
+import ModalFormTest from './modalformtest'
 
 import { Switch, Route} from 'react-router-dom'
 import  './Usermain.css';;
@@ -39,6 +40,12 @@ class Usermain extends Component{
                                 <p>View/Add ADMINS</p>
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/main/dashboard/usersmain/modaltest">
+                                <i className="nc-icon nc-circle-09"></i>
+                                <p>Test Modal</p>
+                            </NavLink>
+                        </li>
                 </div>
                 <div className="col-md-10">
                 <Switch>
@@ -46,6 +53,7 @@ class Usermain extends Component{
                     <Route path="/main/dashboard/usersmain/adduser" component={adduser}/>
                     <Route path="/main/dashboard/usersmain/edituser" component={edituser}/>
                     <Route path="/main/dashboard/usersmain/useradmins" component={UserAdmin}/>
+                    <Route path="/main/dashboard/usersmain/modaltest" component={ModalFormTest}/>
                 </Switch>
                 </div>
             </div>

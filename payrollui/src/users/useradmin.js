@@ -16,12 +16,17 @@ class UserAdmin extends Component{
         }
 
         this.fetchAllUserRolesWithAdminSorted = this.fetchAllUserRolesWithAdminSorted.bind(this);
+        this.editUser = this.editUser.bind(this);
     }
 
     fetchAllUserRolesWithAdminSorted(page = 0){
         axios.get(`${PATH_GET_ALLUSERROLESBUT_SHOWADMINS}?${PARAM_PAGE}${page}`)
         .then(result => this.setState({result: result.data}))
         .catch(error => this.setState({error}));
+    }
+
+    editUser(){
+        
     }
 
     componentDidMount(){
@@ -46,7 +51,7 @@ class UserAdmin extends Component{
                 }
 
                 { result ?
-                        <Table list={result.content} pattern={searchAdmin}/>
+                        <Table list={result.content} pattern={searchAdmin} editUser={this.editUser}/>
                 : null
                 }   
             </div>
@@ -56,7 +61,7 @@ class UserAdmin extends Component{
 
 class Table extends Component{
     render(){
-        const{list,pattern} = this.props;
+        const{list,pattern,editUser} = this.props;
         return(
             <div className="table-responsive table-hover table-striped">
                 <table className="table">
@@ -66,6 +71,7 @@ class Table extends Component{
                          <th scope="col">EmployeeID</th>
                          <th scope="col">EmployeeLvl</th>
                          <th scope="col">Role</th>
+                         <th scope="col">Action</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -75,6 +81,23 @@ class Table extends Component{
                           <td>{id.user.employeeid}</td>
                           <td>{id.user.employeelevel}</td>
                           <td>{id.role.rolename}</td>
+                          <td>
+                              <Button onClick={() => this.editUser} type="button" className="btn btn-success">
+                                  Edit
+                              </Button>
+                              <Button onClick={() => this.editUser} type="button" className="btn btn-success">
+                                  Enable
+                              </Button>
+                              <Button onClick={() => this.editUser} type="button" className="btn btn-success">
+                                  Disable
+                              </Button>
+                              <Button onClick={() => this.editUser} type="button" className="btn btn-success">
+                                  ChangeRoles
+                              </Button>
+                              <Button onClick={() => this.editUser} type="button" className="btn btn-success">
+                                  SendLoginCred
+                              </Button>
+                          </td>
                         </tr>
                         )}
                     </tbody>
