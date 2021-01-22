@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {PATH_BASE,PATH_DELETEUSER,PARAM_DELETE
-    ,PARAM_PAGE,PATH_SENDLOGINDETAILS,PATH_LOGINMESSAGE} from '../API_URLS';
+    ,PARAM_PAGE,PATH_SENDLOGINDETAILS,PATH_LOGINMESSAGE,PATH_SENDLOGINDETAILS_GMAIL} from '../API_URLS';
 
 const searchedForRecord = searchUser => user =>
     user.name.toLowerCase().includes(searchUser.toLowerCase());
@@ -67,13 +67,17 @@ class viewusers extends Component{
         this.componentDidMount();
     }
 
-    //'/test/sendemail/{to}/{subject}/{message}'
+    //'/test/sendemail/{to}/{subject}/{message}' MAILTRAP CILENT WORKS
+    //http://localhost:2345/v1/test/sendLoginCredentials/{to}/{content} GMAIL CLIENT
     onSendLoginDetails(email,password){
         const{loginsetnFailure} = this.state;
-        axios.get(`${PATH_SENDLOGINDETAILS}/${email}/${PATH_LOGINMESSAGE}/${password}`)
+        /* axios.get(`${PATH_SENDLOGINDETAILS}/${email}/${PATH_LOGINMESSAGE}/${password}`)
+        .then(loginsentSuccess => this.setState({loginsentSuccess: loginsentSuccess.data}))
+        .catch(loginsetnFailure => this.setState({loginsetnFailure})) */
+        
+        axios.get(`${PATH_SENDLOGINDETAILS_GMAIL}/${email}/${password}`)
         .then(loginsentSuccess => this.setState({loginsentSuccess: loginsentSuccess.data}))
         .catch(loginsetnFailure => this.setState({loginsetnFailure}))
-        
         console.log(loginsetnFailure);
     }
 

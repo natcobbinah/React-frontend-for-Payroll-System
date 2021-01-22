@@ -84,6 +84,8 @@ class Loginform extends Component{
         let googleIdasPasswrd = response.profileObj.googleId;
         let googleName = response.profileObj.name;
 
+        console.log(response);
+
    /*    if(response){ 
         //check if user is present in database
         axios.get(`${PATH_FINDUSERBY_EMAIL}/${googleEmail}`)

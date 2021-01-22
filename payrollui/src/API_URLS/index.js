@@ -23,3 +23,5 @@ export const PATH_VIEW_USERDEPARTMENTS = 'http://localhost:2345/v1/test/userdepa
 
 export const PATH_SENDLOGINDETAILS = 'http://localhost:2345/v1/test/sendemail';
 export const PATH_LOGINMESSAGE = 'Login with your email and your password is';
+
+export const PATH_SENDLOGINDETAILS_GMAIL ='http://localhost:2345/v1/test/sendLoginCredentials';
