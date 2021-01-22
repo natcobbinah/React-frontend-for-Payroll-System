@@ -26,3 +26,6 @@ export const PATH_LOGINMESSAGE = 'Login with your email and your password is';
 
 export const PATH_SENDLOGINDETAILS_GMAIL ='http://localhost:2345/v1/test/sendLoginCredentials';
 export const PATH_ASSIGNUSERROLES = 'http://localhost:2345/v1/test/assignUserRole';
+export const PATH_ASSIGNUSER_DEPARTMENT = 'http://localhost:2345/v1/test/assignUserDepartment'
+
+export const PATH_GET_ALLUSERROLESBUT_SHOWADMINS = 'http://localhost:2345/v1/test/userroles';

@@ -20,10 +20,6 @@ class viewusers extends Component{
             //email message
             loginsentSuccess:null,
             loginsetnFailure:null,
-
-            //user department variables
-            resultonDeptfetchSuccess:null,
-            resultonDeptfetchError:null,
         }
 
         this.onDisableUsers = this.onDisableUsers.bind(this);
