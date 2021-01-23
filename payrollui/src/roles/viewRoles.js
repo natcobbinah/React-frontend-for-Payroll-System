@@ -22,8 +22,6 @@ class ViewRoles extends Component{
 
             //modal attributes
             modal: false,
-            name: '',
-            modalInputName: '',
         }
 
         this.fetchAllRoles = this.fetchAllRoles.bind(this);
