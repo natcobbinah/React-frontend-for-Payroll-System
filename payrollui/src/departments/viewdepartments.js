@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios'
 import {PATH_GET_DEPARTMENT,PARAM_PAGE,PATH_DELETE_DEPARTMENT,PATH_PATCH_EDITDEPARTMENT} from '../API_URLS'
-
+import Modal from './Modal'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -29,6 +29,9 @@ class ViewDepartment extends Component{
             resultOndelete:null,
             onUpdateSuccess:null,
             onUpdateError:null,
+
+            //modal attributes
+            modal: false,
         }
 
         this.fetchAllDepartments = this.fetchAllDepartments.bind(this);
@@ -63,6 +66,7 @@ class ViewDepartment extends Component{
             departmentid:deptid,
             departmentname: name,
         })
+        this.modalOpen();
     }
 
     updateDepartment(){
@@ -85,13 +89,29 @@ class ViewDepartment extends Component{
         this.fetchAllDepartments();
     }
 
+    modalOpen(){
+        this.setState({
+            modal: true
+        })
+    }
+
+    modalClose(){
+        this.setState({
+            id: '',
+            departmentid: '',
+            departmentname: '',
+            modal: false,
+        })
+    }
+
     componentDidMount(){
         this.fetchAllDepartments();
     }
 
     render(){
         const{result,error,page=0,searchDepartment,
-            resultOndelete,errorOndelete,id,departmentid,departmentname,onUpdateSuccess,onUpdateError
+            resultOndelete,errorOndelete,id,departmentid,departmentname,
+            onUpdateSuccess,onUpdateError,modal
         } = this.state;
         return(
           <div className="container-fluid mt-2">
@@ -99,12 +119,9 @@ class ViewDepartment extends Component{
                 
                 {id ?
                 <div className="row">
-                    <div className="col-md-6">
+                    <Modal show={modal} handleClose={e => this.modalClose(e)}>
+                    <div className="col-md-12">
                         <form>
-                        {/*  <div className="form-group">
-                            <label htmlFor="idlbl">ID</label>
-                            <input type="text" className="form-control" id="idlbl" value={id} onChange={(e) => this.setState({id : e.target.value})}/>
-                          </div> */}
                           <div className="form-group">
                             <label htmlFor="deptidlbl">Department_Code</label>
                             <input type="text" className="form-control" id="deptidlbl" value={departmentid} onChange={(e) => this.setState({departmentid : e.target.value})}/>
@@ -116,6 +133,7 @@ class ViewDepartment extends Component{
                           <button type="button" className="btn btn-primary" onClick={this.updateDepartment}>Update</button>
                         </form>
                     </div>
+                    </Modal>
                 </div>
                   : null
                 }
