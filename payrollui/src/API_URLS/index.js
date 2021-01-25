@@ -41,6 +41,8 @@ export const PATH_GET_USERDESIGNATIONS = 'http://localhost:2345/v1/test/userdesi
 export const PATH_DELETE_USERDESIGNATION = 'http://localhost:2345/v1/test/deleteuserdesignation'
 export const PATH_ASSIGNUSERDESIGNATION = 'http://localhost:2345/v1/test/userdesignation'
 
+export const PATH_PATCH_DESIGNATION = 'http://localhost:2345/v1/test/designation';
+
 //http://localhost:2345/v1/test/deletedesignation/{id}
 //http://localhost:2345/v1/test/designation/{desname}/{deptid}
 //http://localhost:2345/v1/test/deleteuserdesignation/{id}

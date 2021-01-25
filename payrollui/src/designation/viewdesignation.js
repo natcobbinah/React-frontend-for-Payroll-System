@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import axios from 'axios'
 import {PATH_GETALL_DESIGNATION,PATH_ADD_DESIGNATION,PATH_DELETE_DESIGNATION,
-    PARAM_PAGE,PATH_GET_DEPARTMENT} from '../API_URLS'
+    PARAM_PAGE,PATH_GET_DEPARTMENT,PATH_PATCH_DESIGNATION} from '../API_URLS'
 import Modal from './Modal'
 
 class ViewDesignation extends Component{
@@ -19,6 +19,7 @@ class ViewDesignation extends Component{
 
             //modal attributes
             modal: false,
+            editmodal:false,
 
             //value to changeState when assigning modal
             designationaname:'',
@@ -30,12 +31,25 @@ class ViewDesignation extends Component{
             //assigning designation to department attributes
             assignResult:null,
             assignError:null,
+
+            //values to edit on editClicked
+            id: '',
+            designationname:'',
+            departmentid: '',
+            departmentcode: '',
+            departmentname: '',
+
+            //after edit Process attributes
+            onUpdateSuccess:null,
+            onUpdateError: null,
         }
 
         this.fetchAllDesignations = this.fetchAllDesignations.bind(this);
         this.popupModal = this.popupModal.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.addDesignationtoDB = this.addDesignationtoDB.bind(this);
+        this.onEditDesignation = this.onEditDesignation.bind(this);
+        this.updateDesignation = this.updateDesignation.bind(this);
     }
 
     onDelete(id){
@@ -52,6 +66,38 @@ class ViewDesignation extends Component{
         axios.get(`${PATH_ADD_DESIGNATION}/${designationaname}/${selectedDepartment}`)
         .then(assignResult => this.setState({assignResult: assignResult.data}))
         .catch(assignError => this.setState({assignError})); 
+    }
+
+    onEditDesignation(desid,desname ,desdeptid,desdeptcode,desdeptname){
+        this.setState({
+            id: desid,
+            designationname: desname,
+            departmentid: desdeptid,
+            departmentcode: desdeptcode,
+            departmentname: desdeptname,
+        })
+       this.EditmodalOpen();
+    }
+
+    updateDesignation(){
+        const{id,designationname,departmentid,departmentcode,departmentname}=this.state;
+        const headers = { 'content-type': 'application/json'};
+        axios({
+            method: 'patch',
+            url: PATH_PATCH_DESIGNATION,
+            data: {
+                id: id,
+                designationname: designationname,
+                department: {
+                    id:departmentid ,
+                    departmentid:departmentcode,
+                    departmentname: departmentname
+                }
+            },
+            headers: headers
+        })
+        .then(onUpdateSuccess => this.setState({onUpdateSuccess: onUpdateSuccess.data}))
+        .catch(onUpdateError => this.setState({onUpdateError}));
     }
 
     popupModal(){
@@ -83,6 +129,23 @@ class ViewDesignation extends Component{
         })
     }
 
+    EditmodalOpen(){
+        this.setState({
+            editmodal: true
+        })
+    }
+
+    EditmodalClose(){
+        this.setState({
+            id: '',
+            designationname:'',
+            departmentid: '',
+            departmentcode: '',
+            departmentname: '',
+            editmodal: false,
+        })
+    }
+
     componentDidMount(){
         this.fetchAllDesignations();
         this.fetchAllDepartments();
@@ -90,7 +153,9 @@ class ViewDesignation extends Component{
     
     render(){
         const{result,error,page = 0,deleteResult,deleteError,
-        designationaname,modal,deptResult,deptError,pageDept = 0,assignResult,assignError } = this.state;
+        designationaname,modal,editmodal,deptResult,deptError,pageDept = 0,assignResult,assignError ,
+        id,designationname,onUpdateSuccess,onUpdateError
+       } = this.state;
         return(
             <div>
                 <div className="row">
@@ -106,6 +171,33 @@ class ViewDesignation extends Component{
                          </div> : null
                     }
                 </div>
+
+              {/*   edit  designation section codes*/}
+              {onUpdateSuccess?
+                <div className="alert alert-success" role="alert">
+                    <p>Designation updated Successfully</p>
+                </div> : null
+              }
+              {onUpdateError?
+                <div className="alert alert-danger" role="alert">
+                    <p>Error: updating designation failed</p>
+                </div> : null
+              }
+              {id ?
+                <div className="row">
+                  <Modal show={editmodal} handleClose={e => this.EditmodalClose(e)}>
+                     <div className="form-group">
+                        <label htmlFor="designationname">Change DesignationName</label>
+                        <input type="text" value={designationname} className="form-control" onChange={(e) => this.setState({designationname : e.target.value})}/>
+                     </div>
+                     <div className="form-group">
+                       <button type="button" className="btn btn-primary" onClick={this.updateDesignation}>Update</button>
+                     </div>
+                     </Modal>   
+                 </div>
+                :
+                null
+              }
 
                  <div className="row">
                     <div className="col-md-6">
@@ -185,7 +277,7 @@ class ViewDesignation extends Component{
                 </div>
 
                 {result ?
-                <Table list={result.content} onDelete={this.onDelete}/>
+                <Table list={result.content} onDelete={this.onDelete} onEditDesignation={this.onEditDesignation}/>
                 : null
                 }
           </div>
@@ -195,7 +287,7 @@ class ViewDesignation extends Component{
 
 class Table extends Component{
     render(){
-        const{list,onDelete} = this.props;
+        const{list,onDelete,onEditDesignation} = this.props;
         return(
             <div className="table-responsive table-hover table-striped">
             <table className="table">
@@ -211,7 +303,12 @@ class Table extends Component{
                     <tr key={designation.id}>
                       <td>{designation.designationname}</td>
                       <td>{designation.department.departmentname}</td>
-                      <td> 
+                      <td>
+                        <ButtonCustom onClick={() => onEditDesignation(designation.id,designation.designationname ,
+                            designation.department.id,designation.department.departmentid,
+                            designation.department.departmentname)} type="button" className="btn btn-primary">
+                                Edit
+                        </ButtonCustom> 
                         <ButtonCustom onClick={() => onDelete(designation.id)} type="button" className="btn btn-danger">
                                 Delete
                         </ButtonCustom>
