@@ -31,3 +31,17 @@ export const PATH_ASSIGNUSER_DEPARTMENT = 'http://localhost:2345/v1/test/assignU
 export const PATH_GET_ALLUSERROLESBUT_SHOWADMINS = 'http://localhost:2345/v1/test/userroles';
 
 export const PATH_PATCH_EDITUSER = 'http://localhost:2345/v1/test/user';
+
+//need restendpoints to implement
+export const PATH_GETALL_DESIGNATION = 'http://localhost:2345/v1/test/designation';
+export const PATH_ADD_DESIGNATION = 'http://localhost:2345/v1/test/designation';
+export const PATH_DELETE_DESIGNATION = 'http://localhost:2345/v1/test/deletedesignation'
+
+export const PATH_GET_USERDESIGNATIONS = 'http://localhost:2345/v1/test/userdesignation';
+export const PATH_DELETE_USERDESIGNATION = 'http://localhost:2345/v1/test/deleteuserdesignation'
+export const PATH_ASSIGNUSERDESIGNATION = 'http://localhost:2345/v1/test/userdesignation'
+
+//http://localhost:2345/v1/test/deletedesignation/{id}
+//http://localhost:2345/v1/test/designation/{desname}/{deptid}
+//http://localhost:2345/v1/test/deleteuserdesignation/{id}
+//'http://localhost:2345/v1/test/userdesignation/{userid}/{degsnid}'

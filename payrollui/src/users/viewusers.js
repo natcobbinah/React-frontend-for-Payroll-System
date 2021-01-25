@@ -3,6 +3,7 @@ import axios from 'axios';
 import Modal from './Modal'
 import {PATH_BASE,PATH_DELETEUSER,PARAM_DELETE
     ,PARAM_PAGE,PATH_SENDLOGINDETAILS,PATH_LOGINMESSAGE,PATH_SENDLOGINDETAILS_GMAIL,PATH_PATCH_EDITUSER} from '../API_URLS';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const searchedForRecord = searchUser => user =>
     user.name.toLowerCase().includes(searchUser.toLowerCase());
@@ -216,7 +217,8 @@ class viewusers extends Component{
         } = this.state;
         return(
             <div>
-                <Search value={searchUser} onChange={this.onSearchChange}>Search</Search>
+                 <Search value={searchUser} onChange={this.onSearchChange}>Search</Search>
+            
                 {onUpdateSuccess?
                    <div className="alert alert-success" role="alert">
                    <p>User Record updated successfully</p>
@@ -228,13 +230,22 @@ class viewusers extends Component{
                    <p>Error: Updating User record Unsuccessful: Server might have a problem</p>
                  </div> : null
                 }
-               
-                <Button onClick={() => this.fetchAllUsers(page - 1)} type="button" className="btn btn-success">
-                    PreviousRecord
-                </Button>  
-                <Button onClick={() => this.fetchAllUsers(page + 1)} type="button" className="btn btn-primary">
-                    NextRecord
-                </Button>
+
+                <div className="form-row">
+                    <div className="form-group col-md-3">
+                      <Button onClick={() => this.fetchAllUsers(page - 1)} type="button" className="btn btn-success">
+                        PreviousRecord
+                      </Button> 
+                    </div>
+                    <div className="form-group col-md-3"></div> 
+                    <div className="form-group col-md-3"></div> 
+                    <div className="form-group col-md-3">
+                     <Button onClick={() => this.fetchAllUsers(page + 1)} type="button" className="btn btn-primary">
+                         NextRecord
+                     </Button>    
+                    </div> 
+                </div>
+                
                 {  error? 
                     <div className="alert alert-danger" role="alert">
                     <p>Error fetching  records Server might be down</p>
@@ -376,7 +387,12 @@ class Search extends Component{
         const {value,onChange,onSubmit,children} = this.props;
         return(
             <form className="form-inline mr-5 my-2 my-lg-0 mt-5 py-4" onSubmit={onSubmit}>
-                 {children}<input type="text" value={value} onChange={onChange} className="form-control form-control-lg" placeholder="Search for user by name" aria-label="Search"/>
+                <div className="form-group col-md-12">
+                   {children}
+                </div>
+                <div className="form-group col-md-12">
+                  <input type="text" value={value} onChange={onChange} className="form-control form-control-lg" placeholder="Search for user by name" aria-label="Search"/>
+                </div>
             </form>
         );
     }
@@ -386,75 +402,68 @@ class Table extends Component{
     render(){
         const{pattern,list,onDelete,onDisableUsers,onCheckboxSelected,checboxsetState,onSendLoginDetails,
             onEditUser} = this.props;
-        return(
-            <div className="table-responsive table-hover table-striped">
-                <table className="table">
-    ...             <thead className="thead-dark">
-                        <tr>
-                         <th scope="col">Email</th>
-                         <th scope="col">EmployeeID</th>
-                         <th scope="col">EmployeeLvl</th>
-                         <th scope="col">PhoneNo</th>
-                         <th scope="col">BankAccno</th>
-                         <th scope="col">Gender</th>
-                         <th scope="col">HireDate</th>
-                         <th scope="col"></th>
-                         <th scope="col">ACTION</th>
-                         <th scope="col">ACTION</th>
-                         <th scope="col">ACTION</th>
-                         <th scope="col">ACTION</th>
-                         <th scope="col">ACTION</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                         {list.filter(searchedForRecord(pattern)).map(user => 
-                        <tr key={user.id}>
-                          <td>{user.email}</td>
-                          <td>{user.employeeid}</td>
-                          <td>{user.employeelevel}</td>
-                          <td>{user.phonenumber}</td>
-                          <td>{user.bankaccountnumber}</td>
-                          <td>{user.gender}</td>
-                          <td>{user.hiredate}</td>
-                          <td>
-                             <Checkbox onChange={() => onCheckboxSelected(user.id)} type="checkbox" checked={checboxsetState}/>
-                          </td>
-                          <td>
-                              <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-success">
-                                Disable
-                              </Button>
-                          </td>
-                          <td>
-                              <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-success">
-                                Enable
-                              </Button>
-                          </td>
-                          <td>
-                              <Button onClick={() => onEditUser(user.id,user.address,user.city,user.email,
-                                user.employeeid,user.employeelevel,user.enabled,user.password,user.phonenumber,
-                                user.bankaccountnumber,user.birthdate,user.gender,user.hiredate,user.maritalstatus,
-                                user.birthcertid,user.driverslicenseid,user.passportid,user.ssnitid,user.votersid,
-                                user.name,user.tinnumber,user.marriagecertid,user.usercreator
-                                )} type="button" className="btn btn-success">
-                                Edit
-                              </Button>
-                          </td>
-                          <td>
-                              <Button onClick={() => onDelete(user.id)} type="button" className="btn btn-danger">
-                                Delete
-                              </Button>
-                          </td>
-                          <td>
-                              <Button onClick={() => onSendLoginDetails(user.email,user.password)} type="button" className="btn btn-danger">
-                                SendLoginDetails
-                              </Button>
-                          </td>
-                        </tr>
-                        )}
-                    </tbody>
+         return(
+            <div>
+            <table className="table-responsive table-sm table-hover table-striped ">
+               <thead className="thead-dark">
+                  <tr>
+                     <th scope="col">Email</th>
+                     <th scope="col">EmployeeID</th>
+                     <th scope="col">EmployeeLvl</th>
+                     <th scope="col">PhoneNumber</th>
+                     <th scope="col">BankAccountNo</th>
+                     <th scope="col">HireDate</th>
+                 </tr>
+                </thead>
+                <tbody>
+           ``    {list.filter(searchedForRecord(pattern)).map(user => 
+                    <tr key={user.id}>
+                    <td>{user.email}</td>
+                    <td>{user.employeeid}</td>
+                    <td>{user.employeelevel}</td>
+                    <td>{user.phonenumber}</td>
+                    <td>{user.bankaccountnumber}</td>
+                    <td>{user.hiredate}</td>
+                    <td>
+                        <Checkbox onChange={() => onCheckboxSelected(user.id)} type="checkbox" checked={checboxsetState}/>
+                    </td>
+                    <td style={{ width: '10%' }}>
+                        <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-success">
+                         Disable
+                        </Button>
+                    </td>
+                    <td style={{ width: '10%' }}>
+                        <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-success">
+                          Enable
+                        </Button>
+                    </td>
+                     <td style={{ width: '10%' }}>
+                        <Button onClick={() => onEditUser(user.id,user.address,user.city,user.email,
+                         user.employeeid,user.employeelevel,user.enabled,user.password,user.phonenumber,
+                         user.bankaccountnumber,user.birthdate,user.gender,user.hiredate,user.maritalstatus,
+                         user.birthcertid,user.driverslicenseid,user.passportid,user.ssnitid,user.votersid,
+                         user.name,user.tinnumber,user.marriagecertid,user.usercreator
+                         )} type="button" className="btn btn-success">
+                            Edit
+                         </Button>
+                      </td>
+                      <td style={{ width: '10%' }}>
+                          <i className="nc-icon nc-circle-09"></i>
+                          <Button onClick={() => onDelete(user.id)} type="button" className="btn btn-danger">
+                            Delete
+                          </Button>
+                      </td>
+                      <td style={{ width: '10%' }}>
+                           <Button onClick={() => onSendLoginDetails(user.email,user.password)} type="button" className="btn btn-danger">
+                             SendLoginDetails
+                           </Button>
+                      </td>
+                      </tr>
+                    )}
+                  </tbody>
                 </table>
-            </div> 
-        );
+            </div>
+           );
     }
 }
 

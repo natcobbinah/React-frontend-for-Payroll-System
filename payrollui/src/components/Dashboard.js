@@ -4,6 +4,7 @@ import {Route} from 'react-router-dom'
 import Usermain from '../users/Usermain'
 import DepartmentMain from '../departments/departmentmain'
 import Rolesmain from '../roles/rolesMain'
+import DesignationMain from '../designation/designationMain'
 
 class Dashboard extends Component {
   render() {
@@ -21,7 +22,7 @@ class Dashboard extends Component {
                 <Link to="/main/dashboard/department">Department</Link>
             </li>
             <li className="nav-item mx-5">
-                <Link to="/main/dashboard/benefits">Benefits</Link>
+                <Link to="/main/dashboard/designation">Designation</Link>
             </li>
             </ul>
             </nav> 
@@ -30,15 +31,8 @@ class Dashboard extends Component {
                 <Route path="/main/dashboard/usersmain" component={Usermain}/>
                 <Route path="/main/dashboard/department" component={DepartmentMain}/>
                 <Route path="/main/dashboard/roles" component={Rolesmain}/>
+                <Route path="/main/dashboard/designation" component={DesignationMain}/>
             </div>
-        
-          {/* <div className="col-md-9">
-               <Switch>
-                   <Route path="/dashboard/viewusers" component={viewusers}/>
-                    <Route path="/dashboard/edituser" component={edituser}/>
-                    <Route path="/dashboard/searchuser" component={searchuser}/>
-                </Switch>
-            </div> */}
         </div>
     );
   }

@@ -171,7 +171,7 @@ class Loginform extends Component{
                      </div>
 
                      <div className="form-group">
-                        <button type="submit" className="btn btn-primary" onClick={this.handleLoginSubmit}>Login</button>
+                        <button type="submit" className="btn btn-primary btn-block" onClick={this.handleLoginSubmit}>Login</button>
                     </div>
                     </form>
             </div>
