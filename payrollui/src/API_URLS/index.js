@@ -32,7 +32,6 @@ export const PATH_GET_ALLUSERROLESBUT_SHOWADMINS = 'http://localhost:2345/v1/tes
 
 export const PATH_PATCH_EDITUSER = 'http://localhost:2345/v1/test/user';
 
-//need restendpoints to implement
 export const PATH_GETALL_DESIGNATION = 'http://localhost:2345/v1/test/designation';
 export const PATH_ADD_DESIGNATION = 'http://localhost:2345/v1/test/designation';
 export const PATH_DELETE_DESIGNATION = 'http://localhost:2345/v1/test/deletedesignation'
@@ -40,8 +39,24 @@ export const PATH_DELETE_DESIGNATION = 'http://localhost:2345/v1/test/deletedesi
 export const PATH_GET_USERDESIGNATIONS = 'http://localhost:2345/v1/test/userdesignation';
 export const PATH_DELETE_USERDESIGNATION = 'http://localhost:2345/v1/test/deleteuserdesignation'
 export const PATH_ASSIGNUSERDESIGNATION = 'http://localhost:2345/v1/test/userdesignation'
-
 export const PATH_PATCH_DESIGNATION = 'http://localhost:2345/v1/test/designation';
+
+//need to implement restendpoints starting from here
+export const PATH_GETALL_BENEFITS = 'http://localhost:2345/v1/test/benefit';
+export const PATH_POST_BENEFIT = 'http://localhost:2345/v1/test/benefit';
+export const PATH_PATCH_BENEFIT = 'http://localhost:2345/v1/test/benefit';
+export const PATH_DELETE_BENEFIT = 'http://localhost:2345/v1/test/deletebenefit'
+
+export const PATH_GET_ALL_USERBENEFITS = 'http://localhost:2345/v1/test/userbenefit';
+export const PATH_DELETE_USERBENEFIT = 'http://localhost:2345/v1/test/deleteuserbenefit';
+export const PATH_POST_USERBENEFIT = 'http://localhost:2345/v1/test/userbenefit';
+export const PATH_PATCH_USERBENEFIT = 'http://localhost:2345/v1/test/userbenefit';
+
+//http://localhost:2345/v1/test/userbenefit/{benefitid}/{userid}
+//http://localhost:2345/v1/test/deletebenefit{id}
+//http://localhost:2345/v1/test/deleteuserbenefit/{id}
+//----------need to implemented commented line above
+
 
 //http://localhost:2345/v1/test/deletedesignation/{id}
 //http://localhost:2345/v1/test/designation/{desname}/{deptid}

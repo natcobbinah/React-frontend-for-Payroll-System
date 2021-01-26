@@ -5,6 +5,7 @@ import Usermain from '../users/Usermain'
 import DepartmentMain from '../departments/departmentmain'
 import Rolesmain from '../roles/rolesMain'
 import DesignationMain from '../designation/designationMain'
+import BenefitMain from '../benefits/benefitMain'
 
 class Dashboard extends Component {
   render() {
@@ -24,6 +25,9 @@ class Dashboard extends Component {
             <li className="nav-item mx-5">
                 <Link to="/main/dashboard/designation">Designation</Link>
             </li>
+            <li className="nav-item mx-5">
+                <Link to="/main/dashboard/benefits">Benefits</Link>
+            </li>
             </ul>
             </nav> 
             
@@ -32,6 +36,7 @@ class Dashboard extends Component {
                 <Route path="/main/dashboard/department" component={DepartmentMain}/>
                 <Route path="/main/dashboard/roles" component={Rolesmain}/>
                 <Route path="/main/dashboard/designation" component={DesignationMain}/>
+                <Route path="/main/dashboard/benefits" component={BenefitMain}/>
             </div>
         </div>
     );
