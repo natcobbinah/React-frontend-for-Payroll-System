@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {PARAM_PAGE,PATH_GETALL_BENEFITS,PATH_GETALL_DESIGNATION} from '../API_URLS'
+import {PARAM_PAGE,PATH_GETALL_BENEFITS,PATH_GETALL_DESIGNATION,PATH_POST_BENEFIT
+   ,PATH_DELETE_BENEFIT} from '../API_URLS'
 import axios from 'axios'
 import Modal from './Modal'
 
@@ -14,6 +15,7 @@ class ViewBenefits extends Component{
 
             //modal attributes
             modal: false,
+            editmodal:false,
 
             //attributes on designation fetch
             resultDesignation:null,
@@ -22,18 +24,41 @@ class ViewBenefits extends Component{
             //attribute to add benefits
             benefitname: '',
             calculatedamount:'',
+            percentageonCalcamount: '',
             flatamount:'',
-            frequency: '',
             designation:'',
 
             //checkbox state to activate  flatamount
             flatamountradiobtn:false,
             calculatedamoutradiobtn:false,
+
+            //posting benefits to db result objects
+            onPostSuccess:null,
+            onPostFailure:null,
+
+            //ondelete benefits attributes
+            resultOndelete:null,
+            errorOndelete:null,
+
+            //attributes to store onedit clicked button
+            bid: '',
+            bbenefitname:'',
+            bcalcamount:'',
+            bflatamount:'',
+            bpercentageValue:'',
+            bfrequency:'',
+            bdesignationid:'',
+            bdesignationname:'',
+            bdesignationdeptid:'',
+            bdesignationdeptdid:'',
+            bdesignationdeptdeptname:'',
         }
 
         this.onDelete = this.onDelete.bind(this);
+        this.onEdit = this.onEdit.bind(this);
         this.showBenefitModal = this.showBenefitModal.bind(this);
         this.addBenefittoDB = this.addBenefittoDB.bind(this);
+        this.clearModalFields = this.clearModalFields.bind(this);
     }
 
     fetchAllBenefits(page = 0){
@@ -49,11 +74,56 @@ class ViewBenefits extends Component{
     }
 
     addBenefittoDB(){
+        const{benefitname,calculatedamount,flatamount,
+        percentageonCalcamount} = this.state;
+        let selectedDesignation = document.getElementById('designationId').value;
+        let selectedFrequency = document.getElementById('frequencyId').value;
 
+        let computationsonCalculatedAmount = ((+percentageonCalcamount/100) * +calculatedamount)
+ 
+         axios.post(`${PATH_POST_BENEFIT}/${benefitname}/${computationsonCalculatedAmount}/${flatamount}/
+         ${selectedFrequency}/${selectedDesignation}/${percentageonCalcamount}`) 
+         .then(onPostSuccess => this.setState({onPostSuccess: onPostSuccess.data}))
+         .catch(onPostFailure => this.setState({onPostFailure}));  
+    }
+
+    clearModalFields(){
+        this.setState({
+            benefitname: '',
+            calculatedamount:'',
+            percentageonCalcamount: '',
+            flatamount:'',
+            designation:'',
+            flatamountradiobtn:false,
+            calculatedamoutradiobtn:false,
+        })
     }
 
     onDelete(id){
-        console.log(id);
+        axios.get(`${PATH_DELETE_BENEFIT}/${id}`)
+        .then(resultOndelete => this.setState({resultOndelete: resultOndelete.data}))
+        .catch(errorOndelete => this.setState({errorOndelete}))
+        this.fetchAllBenefits();
+    }
+
+    onEdit(benefitid,bbenefitname,bculatedamount,bflatamount,bfrequency,
+        bpercentagevalue,bdesid,bdesdesname,bdesdeptid, bdesdeptdeptid,bdesdeptdeptname){
+        
+        this.setState({
+            bid: benefitid,
+            bbenefitname:bbenefitname,
+            bcalcamount:bculatedamount,
+            bflatamount:bflatamount,
+            bpercentageValue: bpercentagevalue,
+            bfrequency:bfrequency,
+            bdesignationid:bdesid,
+            bdesignationname:bdesdesname,
+            bdesignationdeptid:bdesdeptid,
+            bdesignationdeptdid:bdesdeptdeptid,
+            bdesignationdeptdeptname:bdesdeptdeptname,
+        })
+
+        this.showEditModal();
     }
 
     showBenefitModal(){
@@ -62,13 +132,34 @@ class ViewBenefits extends Component{
 
     modalOpen(){
         this.setState({
-            modal: true
+            modal: true,
+            benefitname: '',
+            calculatedamount:'',
+            percentageonCalcamount: '',
+            flatamount:'',
+            designation:'',
         })
     }
 
     modalClose(){
         this.setState({
             modal: false,
+        })
+    }
+
+    showEditModal(){
+        this.modalOpen();
+    }
+
+    EditmodalOpen(){
+        this.setState({
+            editmodal: true
+        })
+    }
+
+    EditmodalClose(){
+        this.setState({
+            editmodal: false,
         })
     }
 
@@ -79,8 +170,13 @@ class ViewBenefits extends Component{
 
     render(){
         const{result,error, page = 0, pageDesignation = 0,
-        modal, benefitname,calculatedamount,flatamount,frequency,
-        flatamountradiobtn,calculatedamoutradiobtn,resultDesignation} = this.state;
+        modal, benefitname,calculatedamount,flatamount,
+        flatamountradiobtn,calculatedamoutradiobtn,resultDesignation,
+        percentageonCalcamount,onPostSuccess,onPostFailure,
+        resultOndelete,errorOndelete, 
+        bid,bbenefitname,bcalcamount,bflatamount,bfrequency,bdesignationid,bdesignationname,
+        bdesignationdeptid,designationdeptdid,bdesignationdeptdeptname,
+        bpercentageValue,editmodal} = this.state;
         return(
             <div className="container-fluid">
 
@@ -89,6 +185,18 @@ class ViewBenefits extends Component{
                     <p>Error Populating Records: Server might be down</p>
                  </div> : null
                 }
+
+                {errorOndelete?
+                 <div className="alert alert-danger" role="alert">
+                    <p>Error deleting Benefit: Operation unsuccessful</p>
+                 </div> : null
+                }  
+
+                {resultOndelete?
+                 <div className="alert alert-success" role="alert">
+                    <p>Benefit deleted successfully</p>
+                 </div> : null
+                }   
 
                 <div className="row">
                     <div className="col-md-6">
@@ -100,6 +208,16 @@ class ViewBenefits extends Component{
 
                 <div className="row">
                   <Modal show={modal} handleClose={e => this.modalClose(e)}>
+                      {onPostSuccess?
+                        <div className="alert alert-success" role="alert">
+                            <p>Benefit record saved successfully</p>
+                        </div> : null
+                      }
+                      {onPostFailure?
+                        <div className="alert alert-danger" role="alert">
+                            <p>Error: Saving benefit record Unsuccessful</p>
+                        </div> : null
+                      }
                      <div className="form-group">
                         <label htmlFor="designationname">Benefit Name</label>
                         <input type="text" value={benefitname} className="form-control" onChange={(e) => this.setState({benefitname : e.target.value})}/>
@@ -119,22 +237,44 @@ class ViewBenefits extends Component{
                      </div>
                      {flatamountradiobtn?
                          <div className="form-group">
-                          <input type="text" value={flatamount} className="form-control" onChange={(e) => this.setState({flatamount : e.target.value})}/>
+                          <input type="text" value={flatamount} className="form-control" onChange={(e) => this.setState({flatamount : e.target.value, calculatedamount: '0',percentageonCalcamount:'0'})}/>
                         </div>
                       : null
                      }
                       {calculatedamoutradiobtn?
                          <div className="form-group">
                           <label htmlFor="amount">Amount</label>
-                          <input type="text" value={calculatedamount} className="form-control" onChange={(e) => this.setState({calculatedamount : e.target.value})}/>
+                          <input type="text" value={calculatedamount} className="form-control" onChange={(e) => this.setState({calculatedamount : e.target.value, flatamount: '0'})}/>
                           <label htmlFor="amount">% on Amount</label>
-                          <input type="text"  className="form-control"/>
+                          <input type="text" value={percentageonCalcamount} className="form-control" onChange={(e) => this.setState({percentageonCalcamount : e.target.value})} className="form-control"/>
                         </div>
                       : null
                      }
                      <div className="form-group">
                         <label htmlFor="designationname">Frequency</label>
-                        <input type="text" value={frequency} className="form-control" onChange={(e) => this.setState({frequency : e.target.value})}/>
+                        <select class="form-select" aria-label="Default select example" id="frequencyId">
+                            <option value="1month">1month</option>
+                            <option value="2months">2months</option>
+                            <option value="3months">3months</option>
+                            <option value="4months">4months</option>
+                            <option value="5months">5months</option>
+                            <option value="6months">6months</option>
+                            <option value="7months">7months</option>
+                            <option value="8months">8months</option>
+                            <option value="9months">9months</option>
+                            <option value="10months">10months</option>
+                            <option value="11months">11months</option>
+                            <option value="12months">12months</option>
+                        </select>
+                    
+                    {/*  <div className="form-group">
+                         <input type="text" list="dl"/>
+                         <datalist id="dl"> 
+                            <option value="1">one</option>
+                            <option value="2">Twp</option>
+                         </datalist>
+                     </div> */}
+
                      </div>
                      <div className="form-group">
                        <div className="col-md-6">
@@ -158,9 +298,81 @@ class ViewBenefits extends Component{
                         </div>
                      <div className="form-group">
                        <button type="button" className="btn btn-primary" onClick={this.addBenefittoDB}>Add</button>
+                       <button type="button" className="btn btn-primary" onClick={this.clearModalFields}>Clear</button>
                      </div>
                      </Modal>   
                  </div>
+
+               {/* on edit clicked========================================================================================================= */}
+                <div className="row">
+               <Modal show={editmodal} handleClose={e => this.EditmodalClose(e)}>
+                     <div className="form-group">
+                        <label htmlFor="designationname">Benefit Name</label>
+                        <input type="text" value={bbenefitname} className="form-control" onChange={(e) => this.setState({bbenefitname : e.target.value})}/>
+                     </div>
+                     <div className="form-group">
+                        <label htmlFor="amount">Amount</label>
+                     </div>
+                     {bflatamount?
+                         <div className="form-group">
+                          <input type="text" value={bflatamount} className="form-control" onChange={(e) => this.setState({bflatamount : e.target.value})}/>
+                        </div>
+                      : null
+                     }
+                      {bcalcamount?
+                         <div className="form-group">
+                          <label htmlFor="amount">Amount</label>
+                          <input type="text" value={bcalcamount} className="form-control" onChange={(e) => this.setState({bcalcamount : e.target.value})}/>
+                          <label htmlFor="amount">% on Amount</label>
+                          <input type="text" value={bpercentageValue} className="form-control" onChange={(e) => this.setState({bpercentageValue : e.target.value})} className="form-control"/>
+                        </div>
+                      : null
+                     }
+                     <div className="form-group">
+                        <label htmlFor="designationname">Frequency</label>
+                        <select class="form-select" aria-label="Default select example" id="editfrequencyId">
+                            <option selected>{bfrequency}</option>
+                            <option value="1month">1month</option>
+                            <option value="2months">2months</option>
+                            <option value="3months">3months</option>
+                            <option value="4months">4months</option>
+                            <option value="5months">5months</option>
+                            <option value="6months">6months</option>
+                            <option value="7months">7months</option>
+                            <option value="8months">8months</option>
+                            <option value="9months">9months</option>
+                            <option value="10months">10months</option>
+                            <option value="11months">11months</option>
+                            <option value="12months">12months</option>
+                        </select>
+
+                     </div>
+                     <div className="form-group">
+                       <div className="col-md-6">
+                            <ButtonCustom onClick={() => this.fetchAllDesignations(pageDesignation - 1)} type="button" className="btn btn-success">
+                                  PreviousRecord
+                            </ButtonCustom>  
+                            <ButtonCustom onClick={() => this.fetchAllDesignations(pageDesignation + 1)} type="button" className="btn btn-primary">
+                                  NextRecord
+                           </ButtonCustom>  
+                       </div>
+
+                        <label htmlFor="selectuser">Select Designation</label>
+                        <select id="designationId">
+                        {resultDesignation ?
+                         resultDesignation.content.map(designation => (
+                        <option value={designation.id == bdesignationid }>{designation.designationname}</option>
+                        ))
+                        : null
+                        }   
+                        </select>
+                        </div>
+                     <div className="form-group">
+                       <button type="button" className="btn btn-primary" onClick={this.updateBenefit}>Update</button>
+                     </div>
+                     </Modal>  
+                 </div> 
+               {/* on edit clicked end line================================================================================================ */}
 
                 <div className="row">
                     <div className="col-md-6">
@@ -176,7 +388,7 @@ class ViewBenefits extends Component{
                 </div>
 
                 {result?
-                  <Table list={result.content} onDelete={this.onDelete}/>
+                  <Table list={result.content} onDelete={this.onDelete} onEdit={this.onEdit}/>
                   : null
                 }
               
@@ -185,9 +397,10 @@ class ViewBenefits extends Component{
     }
 }
 
+
 class Table extends Component{
     render(){
-        const{list,onDelete} = this.props;
+        const{list,onDelete,onEdit} = this.props;
         return(
             <div className="table-responsive table-hover table-striped">
             <table className="table">
@@ -211,7 +424,15 @@ class Table extends Component{
                       <td>{benefit.calculatedamount}</td>
                       <td>{benefit.designation.designationname}</td>
                       <td>{benefit.designation.department.departmentname}</td>
-                      <td> 
+                      <td>
+                        <ButtonCustom onClick={() => onEdit(benefit.id,benefit.benefitname,
+                            benefit.calculatedamount,benefit.flatamount, benefit.percentagevalue,
+                            benefit.frequency,
+                            benefit.designation.id,benefit.designation.designationname,
+                            benefit.designation.department.id, benefit.designation.department.departmentid,
+                            benefit.designation.department.departmentname)} type="button" className="btn btn-danger">
+                                Edit
+                        </ButtonCustom> 
                         <ButtonCustom onClick={() => onDelete(benefit.id)} type="button" className="btn btn-danger">
                                 Delete
                         </ButtonCustom>
