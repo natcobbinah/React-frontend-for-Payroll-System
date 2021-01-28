@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {PATH_ADDUSER} from '../API_URLS'
 
-class edituser extends Component{
+class UserProfile extends Component{
     constructor(props){
         super(props);
 
@@ -232,4 +232,4 @@ class ButtonCustom extends Component{
     }
 }
 
-export default edituser;
+export default UserProfile;

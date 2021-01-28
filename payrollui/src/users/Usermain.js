@@ -3,9 +3,8 @@ import { NavLink} from 'react-router-dom'
 
 import viewusers from './viewusers';
 import adduser from './adduser'
-import edituser from './edituser'
+import UserProfile from './userprofile'
 import UserAdmin from './useradmin'
-import ModalFormTest from './modalformtest'
 
 import { Switch, Route} from 'react-router-dom'
 import  './Usermain.css';;
@@ -18,32 +17,26 @@ class Usermain extends Component{
                 <div className="col-md-2">
                       <li className="nav-item">
                             <NavLink className="nav-link" to="/main/dashboard/usersmain/viewusers">
-                                <i className="nc-icon nc-chart-pie-35"></i>
+                                <i class="fa fa-street-view fa-5x" aria-hidden="true"></i>
                                 <p>View Users</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/main/dashboard/usersmain/adduser">
-                                <i className="nc-icon nc-circle-09"></i>
+                            <i class="fa fa-address-book-o fa-5x" aria-hidden="true"></i>
                                 <p>Add User</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/main/dashboard/usersmain/edituser">
-                                <i className="nc-icon nc-circle-09"></i>
-                                <p>Edit User</p>
+                                <i class="fa fa-user-secret fa-5x" aria-hidden="true"></i>
+                                <p>User Profile</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/main/dashboard/usersmain/useradmins">
-                                <i className="nc-icon nc-circle-09"></i>
+                                <i class="fa fa-eye fa-5x" aria-hidden="true"></i>
                                 <p>View/Add ADMINS</p>
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/main/dashboard/usersmain/modaltest">
-                                <i className="nc-icon nc-circle-09"></i>
-                                <p>Test Modal</p>
                             </NavLink>
                         </li>
                 </div>
@@ -51,9 +44,8 @@ class Usermain extends Component{
                 <Switch>
                     <Route path="/main/dashboard/usersmain/viewusers" component={viewusers}/>
                     <Route path="/main/dashboard/usersmain/adduser" component={adduser}/>
-                    <Route path="/main/dashboard/usersmain/edituser" component={edituser}/>
+                    <Route path="/main/dashboard/usersmain/edituser" component={UserProfile}/>
                     <Route path="/main/dashboard/usersmain/useradmins" component={UserAdmin}/>
-                    <Route path="/main/dashboard/usersmain/modaltest" component={ModalFormTest}/>
                 </Switch>
                 </div>
             </div>

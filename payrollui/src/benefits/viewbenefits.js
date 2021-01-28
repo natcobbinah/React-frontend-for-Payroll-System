@@ -44,26 +44,12 @@ class ViewBenefits extends Component{
             resultOndelete:null,
             errorOndelete:null,
 
-            //attributes to store onedit clicked button
-            bid: '',
-            bbenefitname:'',
-            bcalcamount:'',
-            bflatamount:'',
-            bpercentageValue:'',
-            bfrequency:'',
-            bdesignationid:'',
-            bdesignationname:'',
-            bdesignationdeptid:'',
-            bdesignationdeptdid:'',
-            bdesignationdeptdeptname:'',
-
             //multiple select attribute
             selectedDesignations:'',
             selectedDepartments: '',
         }
 
         this.onDelete = this.onDelete.bind(this);
-        this.onEdit = this.onEdit.bind(this);
         this.showBenefitModal = this.showBenefitModal.bind(this);
         this.addBenefittoDB = this.addBenefittoDB.bind(this);
         this.clearModalFields = this.clearModalFields.bind(this);
@@ -151,26 +137,6 @@ class ViewBenefits extends Component{
         this.fetchAllBenefits();
     }
 
-    onEdit(benefitid,bbenefitname,bculatedamount,bflatamount,bfrequency,
-        bpercentagevalue,bdesid,bdesdesname,bdesdeptid, bdesdeptdeptid,bdesdeptdeptname){
-        
-        this.setState({
-            bid: benefitid,
-            bbenefitname:bbenefitname,
-            bcalcamount:bculatedamount,
-            bflatamount:bflatamount,
-            bpercentageValue: bpercentagevalue,
-            bfrequency:bfrequency,
-            bdesignationid:bdesid,
-            bdesignationname:bdesdesname,
-            bdesignationdeptid:bdesdeptid,
-            bdesignationdeptdid:bdesdeptdeptid,
-            bdesignationdeptdeptname:bdesdeptdeptname,
-        })
-
-        this.showEditModal();
-    }
-
     showBenefitModal(){
         this.modalOpen();
     }
@@ -189,33 +155,6 @@ class ViewBenefits extends Component{
     modalClose(){
         this.setState({
             modal: false,
-        })
-    }
-
-    showEditModal(){
-        this.modalOpen();
-    }
-
-    EditmodalOpen(){
-        this.setState({
-            editmodal: true
-        })
-    }
-
-    EditmodalClose(){
-        this.setState({
-            bid: '',
-            bbenefitname:'',
-            bcalcamount:'',
-            bflatamount:'',
-            bpercentageValue:'',
-            bfrequency:'',
-            bdesignationid:'',
-            bdesignationname:'',
-            bdesignationdeptid:'',
-            bdesignationdeptdid:'',
-            bdesignationdeptdeptname:'',
-            editmodal: false,
         })
     }
 
@@ -379,77 +318,6 @@ class ViewBenefits extends Component{
                      </Modal>   
                  </div>
 
-               {/* on edit clicked========================================================================================================= */}
-                <div className="row">
-               <Modal show={editmodal} handleClose={e => this.EditmodalClose(e)}>
-                     <div className="form-group">
-                        <label htmlFor="designationname">Benefit Name</label>
-                        <input type="text" value={bbenefitname} className="form-control" onChange={(e) => this.setState({bbenefitname : e.target.value})}/>
-                     </div>
-                     <div className="form-group">
-                        <label htmlFor="amount">Amount</label>
-                     </div>
-                     {bflatamount?
-                         <div className="form-group">
-                          <input type="text" value={bflatamount} className="form-control" onChange={(e) => this.setState({bflatamount : e.target.value})}/>
-                        </div>
-                      : null
-                     }
-                      {bcalcamount?
-                         <div className="form-group">
-                          <label htmlFor="amount">Amount</label>
-                          <input type="text" value={bcalcamount} className="form-control" onChange={(e) => this.setState({bcalcamount : e.target.value})}/>
-                          <label htmlFor="amount">% on Amount</label>
-                          <input type="text" value={bpercentageValue} className="form-control" onChange={(e) => this.setState({bpercentageValue : e.target.value})} className="form-control"/>
-                        </div>
-                      : null
-                     }
-                     <div className="form-group">
-                        <label htmlFor="designationname">Frequency</label>
-                        <select class="form-select" aria-label="Default select example" id="editfrequencyId">
-                            <option selected>{bfrequency}</option>
-                            <option value="1month">1month</option>
-                            <option value="2months">2months</option>
-                            <option value="3months">3months</option>
-                            <option value="4months">4months</option>
-                            <option value="5months">5months</option>
-                            <option value="6months">6months</option>
-                            <option value="7months">7months</option>
-                            <option value="8months">8months</option>
-                            <option value="9months">9months</option>
-                            <option value="10months">10months</option>
-                            <option value="11months">11months</option>
-                            <option value="12months">12months</option>
-                        </select>
-
-                     </div>
-                     <div className="form-group">
-                       <div className="col-md-6">
-                            <ButtonCustom onClick={() => this.fetchAllDesignations(pageDesignation - 1)} type="button" className="btn btn-success">
-                                  PreviousRecord
-                            </ButtonCustom>  
-                            <ButtonCustom onClick={() => this.fetchAllDesignations(pageDesignation + 1)} type="button" className="btn btn-primary">
-                                  NextRecord
-                           </ButtonCustom>  
-                       </div>
-
-                        <label htmlFor="selectuser">Select Designation</label>
-                        <select id="designationId">
-                        {resultDesignation ?
-                         resultDesignation.content.map(designation => (
-                        <option value={designation.id == bdesignationid }>{designation.designationname}</option>
-                        ))
-                        : null
-                        }   
-                        </select>
-                        </div>
-                     <div className="form-group">
-                       <button type="button" className="btn btn-primary" onClick={this.updateBenefit}>Update</button>
-                     </div>
-                     </Modal>  
-                 </div> 
-               {/* on edit clicked end line================================================================================================ */}
-
                 <div className="row">
                     <div className="col-md-6">
                       <ButtonCustom onClick={() => this.fetchAllBenefits(page - 1)} type="button" className="btn btn-success">
@@ -501,14 +369,6 @@ class Table extends Component{
                       <td>{benefit.designation.designationname}</td>
                       <td>{benefit.designation.department.departmentname}</td>
                       <td>
-                        <ButtonCustom onClick={() => onEdit(benefit.id,benefit.benefitname,
-                            benefit.calculatedamount,benefit.flatamount, benefit.percentagevalue,
-                            benefit.frequency,
-                            benefit.designation.id,benefit.designation.designationname,
-                            benefit.designation.department.id, benefit.designation.department.departmentid,
-                            benefit.designation.department.departmentname)} type="button" className="btn btn-danger">
-                                Edit
-                        </ButtonCustom> 
                         <ButtonCustom onClick={() => onDelete(benefit.id)} type="button" className="btn btn-danger">
                                 Delete
                         </ButtonCustom>

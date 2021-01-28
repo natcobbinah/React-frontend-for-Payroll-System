@@ -17,7 +17,7 @@ class viewusers extends Component{
             result: null,
             error:null,
             userstoDisable: [],
-            checkedItems:new Map(),
+            checkedItems:[],
 
             //email message
             loginsentSuccess:null,
@@ -60,10 +60,10 @@ class viewusers extends Component{
         this.onDelete = this.onDelete.bind(this);
         this.fetchAllUsers = this.fetchAllUsers.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
-        this.onCheckboxSelected = this.onCheckboxSelected.bind(this);
         this.onSendLoginDetails = this.onSendLoginDetails.bind(this);
         this.onEditUser = this.onEditUser.bind(this);
         this.onUpdateUser = this.onUpdateUser.bind(this);
+        this.onSelected = this.onSelected.bind(this);
     }
 
     onSearchChange(event){
@@ -78,28 +78,6 @@ class viewusers extends Component{
         .catch(error => this.setState({error}));
     }
 
-    onCheckboxSelected(event){
-        /* const{userstoDisable}=this.state;
-        this.setState({
-            userstoDisable: userstoDisable.concat(id)
-        })
-        console.log(userstoDisable); */
-       /*  var isChecked = event.target.checked;
-        var item = event.target.value;
-        this.setState(
-            prevState => ({
-                checkedItems: prevState.checkedItems.set(item,isChecked)
-            })
-        ) */
-        const target = event.target;
-        var value = target.value;
-        if(target.checked){
-            this.state.userstoDisable[value]=value;
-        }else{
-            this.state.userstoDisable.splice(value,1);
-        }
-    }
-
     onDisableUsers(){
        /*  const{userstoDisable}=this.state;
         this.setState({
@@ -111,8 +89,14 @@ class viewusers extends Component{
     }
 
     onDelete(id){
-        axios.get(`${PATH_DELETEUSER}?${PARAM_DELETE}${id}`)
-        this.componentDidMount();
+        const{userstoDisable} = this.state;
+         if(userstoDisable[0] === id){
+            userstoDisable.pop();
+            axios.get(`${PATH_DELETEUSER}?${PARAM_DELETE}${id}`)
+            this.componentDidMount();
+        }else{
+           window.alert("You need to select immediate checkbox before you can delete")
+        } 
     }
 
     //'/test/sendemail/{to}/{subject}/{message}' MAILTRAP CILENT WORKS
@@ -127,6 +111,12 @@ class viewusers extends Component{
         .then(loginsentSuccess => this.setState({loginsentSuccess: loginsentSuccess.data}))
         .catch(loginsetnFailure => this.setState({loginsetnFailure}))
         console.log(loginsetnFailure);
+    }
+
+    onSelected(id){
+        const{userstoDisable} = this.state;
+        userstoDisable.push(id);
+        console.log(userstoDisable);
     }
 
     onEditUser(userid,useraddress,usercity,useremail,
@@ -235,8 +225,10 @@ class viewusers extends Component{
         } = this.state;
         return(
             <div>
-                 <Search value={searchUser} onChange={this.onSearchChange}>Search</Search>
-            
+                 <nav className="navbar navbar-expand-lg navbar-light bg-light my-2 pt-2">
+                    <Search value={searchUser} onChange={this.onSearchChange}>Search</Search>
+                 </nav>
+
                 {onUpdateSuccess?
                    <div className="alert alert-success" role="alert">
                    <p>User Record updated successfully</p>
@@ -252,14 +244,14 @@ class viewusers extends Component{
                 <div className="form-row">
                     <div className="form-group col-md-3">
                       <Button onClick={() => this.fetchAllUsers(page - 1)} type="button" className="btn btn-success">
-                        PreviousRecord
+                       <i class="fa fa-arrow-left" aria-hidden="true"></i>
                       </Button> 
                     </div>
                     <div className="form-group col-md-3"></div> 
                     <div className="form-group col-md-3"></div> 
-                    <div className="form-group col-md-3">
+                    <div className=" float-right form-group col-md-3">
                      <Button onClick={() => this.fetchAllUsers(page + 1)} type="button" className="btn btn-primary">
-                         NextRecord
+                     <i class="fa fa-arrow-right" aria-hidden="true"></i>
                      </Button>    
                     </div> 
                 </div>
@@ -392,7 +384,7 @@ class viewusers extends Component{
                 { result ?
                         <Table list={result.content} pattern={searchUser} onDelete={this.onDelete} onDisableUsers={this.onDisableUsers} 
                         onSendLoginDetails={this.onSendLoginDetails}
-                        onEditUser={this.onEditUser}/>
+                        onEditUser={this.onEditUser} onSelected={this.onSelected}/>
                 : null
                 }   
             </div>
@@ -405,12 +397,9 @@ class Search extends Component{
         const {value,onChange,onSubmit,children} = this.props;
         return(
             <form className="form-inline mr-5 my-2 my-lg-0 mt-5 py-4" onSubmit={onSubmit}>
-                <div className="form-group col-md-12">
-                   {children}
-                </div>
-                <div className="form-group col-md-12">
-                  <input type="text" value={value} onChange={onChange} className="form-control form-control-lg" placeholder="Search for user by name" aria-label="Search"/>
-                </div>
+               <div className="form-group">
+                    {children}<input type="text" value={value} onChange={onChange} className="form-control form-control-lg" placeholder="Search for user by name" aria-label="Search"/>
+               </div>
             </form>
         );
     }
@@ -419,23 +408,30 @@ class Search extends Component{
 class Table extends Component{
     render(){
         const{pattern,list,onDelete,onDisableUsers,onSendLoginDetails,
-            onEditUser} = this.props;
+            onEditUser,onSelected} = this.props;
          return(
-            <div>
+            <div> 
             <table className="table-responsive table-sm table-hover table-striped ">
-               <thead className="thead-dark">
+               <thead className="table-dark">
                   <tr>
                      <th scope="col">Email</th>
                      <th scope="col">EmployeeID</th>
                      <th scope="col">EmployeeLvl</th>
                      <th scope="col">PhoneNumber</th>
                      <th scope="col">BankAccountNo</th>
-                     <th scope="col">HireDate</th>
+                     <th scope="col">Hiredate</th>
+                     <th scope="col"><i class="fa fa-eercast" aria-hidden="true"></i></th>
+                     <th scope="col">#</th>
+                     <th scope="col">#</th>
+                     <th scope="col">#</th>
+                     <th scope="col">#</th>
+                     <th scope="col">#</th>
+                  
                  </tr>
                 </thead>
                 <tbody>
            ``    {list.filter(searchedForRecord(pattern)).map(user => 
-                    <tr key={user.id}>
+                    <tr key={user.id} className="align-bottom">
                     <td>{user.email}</td>
                     <td>{user.employeeid}</td>
                     <td>{user.employeelevel}</td>
@@ -443,16 +439,16 @@ class Table extends Component{
                     <td>{user.bankaccountnumber}</td>
                     <td>{user.hiredate}</td>
                     <td>
-                       <input type="checkbox" name="users" value={user.id} onChange={() => this.onCheckboxSelected}/>
+                      <input type="checkbox"  onChange={() => onSelected(user.id)}/>
                     </td>
                     <td style={{ width: '10%' }}>
                         <Button onClick={() => onDisableUsers()} type="button" className="btn btn-success">
-                         Disable
+                          <i class="fa fa-bug" title="Enable" aria-hidden="true"></i>
                         </Button>
                     </td>
                     <td style={{ width: '10%' }}>
-                        <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-success">
-                          Enable
+                        <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-info">
+                        <i class="fa fa-toggle-on" title="Disable" aria-hidden="true"></i>
                         </Button>
                     </td>
                      <td style={{ width: '10%' }}>
@@ -461,19 +457,18 @@ class Table extends Component{
                          user.bankaccountnumber,user.birthdate,user.gender,user.hiredate,user.maritalstatus,
                          user.birthcertid,user.driverslicenseid,user.passportid,user.ssnitid,user.votersid,
                          user.name,user.tinnumber,user.marriagecertid,user.usercreator
-                         )} type="button" className="btn btn-success">
-                            Edit
+                         )} type="button" className="btn btn-primary">
+                            <i className="fa fa-pencil-square-o" title="Edit"></i>
                          </Button>
                       </td>
                       <td style={{ width: '10%' }}>
-                          <i className="nc-icon nc-circle-09"></i>
                           <Button onClick={() => onDelete(user.id)} type="button" className="btn btn-danger">
-                            Delete
+                          <i className="fa fa-trash" title="Delete" ></i>
                           </Button>
                       </td>
                       <td style={{ width: '10%' }}>
-                           <Button onClick={() => onSendLoginDetails(user.email,user.password)} type="button" className="btn btn-danger">
-                             SendLoginDetails
+                           <Button onClick={() => onSendLoginDetails(user.email,user.password)} type="button" className="btn btn-dark">
+                           <i class="fa fa-envelope" aria-hidden="true" title="Send Login Details"></i>
                            </Button>
                       </td>
                       </tr>
@@ -484,7 +479,6 @@ class Table extends Component{
            );
     }
 }
-
 
 class Button extends Component{
     render(){
