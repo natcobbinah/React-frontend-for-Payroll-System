@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {PARAM_PAGE,PATH_GETALL_BENEFITS,PATH_GETALL_DESIGNATION,PATH_POST_BENEFIT
-   ,PATH_DELETE_BENEFIT} from '../API_URLS'
+   ,PATH_DELETE_BENEFIT,NO_OF_DESIGNATIONS,PATH_GET_DEPARTMENT} from '../API_URLS'
 import axios from 'axios'
 import Modal from './Modal'
 
@@ -12,6 +12,10 @@ class ViewBenefits extends Component{
             //attributes on benefits fetch 
             result: null,
             error: null,
+
+            //attributes on departments fetch
+            resultDept:null,
+            errorDept:null,
 
             //modal attributes
             modal: false,
@@ -52,6 +56,10 @@ class ViewBenefits extends Component{
             bdesignationdeptid:'',
             bdesignationdeptdid:'',
             bdesignationdeptdeptname:'',
+
+            //multiple select attribute
+            selectedDesignations:'',
+            selectedDepartments: '',
         }
 
         this.onDelete = this.onDelete.bind(this);
@@ -59,6 +67,8 @@ class ViewBenefits extends Component{
         this.showBenefitModal = this.showBenefitModal.bind(this);
         this.addBenefittoDB = this.addBenefittoDB.bind(this);
         this.clearModalFields = this.clearModalFields.bind(this);
+        this.multipleselectHandler =this.multipleselectHandler.bind(this);
+        this.multipleselectHandlerDept = this.multipleselectHandlerDept.bind(this);
     }
 
     fetchAllBenefits(page = 0){
@@ -67,24 +77,59 @@ class ViewBenefits extends Component{
         .catch(error => this.setState({error}));
     }
 
+    fetchAllDepartments(pageDept = 0){
+        axios.get(`${PATH_GET_DEPARTMENT}?${PARAM_PAGE}${pageDept}`)
+        .then(resultDept => this.setState({resultDept: resultDept.data}))
+        .catch(errorDept => this.setState({errorDept}));
+    }
+
     fetchAllDesignations(pageDesignation = 0){
         axios.get(`${PATH_GETALL_DESIGNATION}?${PARAM_PAGE}${pageDesignation}`)
         .then(resultDesignation => this.setState({resultDesignation: resultDesignation.data}))
         .catch(errorDesignation => this.setState({errorDesignation}))
     }
 
+    multipleselectHandler(event){
+        const selected=[];
+        let selectedOption = (event.target.selectedOptions);
+
+        for(let i=0; i < selectedOption.length; i++){
+            selected.push(selectedOption.item(i).value)
+        }
+        this.setState({
+            selectedDesignations:selected
+        })
+    }
+
+    multipleselectHandlerDept(event){
+        const selectedDept=[];
+        let selectedOption = (event.target.selectedOptions);
+
+        for(let i=0; i < selectedOption.length; i++){
+            selectedDept.push(selectedOption.item(i).value)
+        }
+        this.setState({
+            selectedDepartments:selectedDept
+        })
+    }
+
+    ///test/benefit/{benefitname}/{calculatedamount}/{flatamount}/{frequency}/{percentagevalue}/{departments}
+    //http://localhost:2345/v1/test/benefit/DeptDesMINIXTest/0/111/Monthly/0/2,3?designations=6,7
     addBenefittoDB(){
         const{benefitname,calculatedamount,flatamount,
-        percentageonCalcamount} = this.state;
-        let selectedDesignation = document.getElementById('designationId').value;
+        percentageonCalcamount,selectedDesignations,selectedDepartments} = this.state;
+        //let selectedDesignation = document.getElementById('designationId').value;
+        
         let selectedFrequency = document.getElementById('frequencyId').value;
+        //console.log(selectedDesignations);
+        //console.log(selectedDepartments);
 
-        let computationsonCalculatedAmount = ((+percentageonCalcamount/100) * +calculatedamount)
+         let computationsonCalculatedAmount = ((+percentageonCalcamount/100) * +calculatedamount)
  
          axios.post(`${PATH_POST_BENEFIT}/${benefitname}/${computationsonCalculatedAmount}/${flatamount}/
-         ${selectedFrequency}/${selectedDesignation}/${percentageonCalcamount}`) 
+         ${selectedFrequency}/${percentageonCalcamount}/${selectedDepartments}?${NO_OF_DESIGNATIONS}${selectedDesignations}`) 
          .then(onPostSuccess => this.setState({onPostSuccess: onPostSuccess.data}))
-         .catch(onPostFailure => this.setState({onPostFailure}));  
+         .catch(onPostFailure => this.setState({onPostFailure}));   
     }
 
     clearModalFields(){
@@ -159,6 +204,17 @@ class ViewBenefits extends Component{
 
     EditmodalClose(){
         this.setState({
+            bid: '',
+            bbenefitname:'',
+            bcalcamount:'',
+            bflatamount:'',
+            bpercentageValue:'',
+            bfrequency:'',
+            bdesignationid:'',
+            bdesignationname:'',
+            bdesignationdeptid:'',
+            bdesignationdeptdid:'',
+            bdesignationdeptdeptname:'',
             editmodal: false,
         })
     }
@@ -166,6 +222,7 @@ class ViewBenefits extends Component{
     componentDidMount(){
         this.fetchAllBenefits();
         this.fetchAllDesignations();
+        this.fetchAllDepartments();
     }
 
     render(){
@@ -176,7 +233,7 @@ class ViewBenefits extends Component{
         resultOndelete,errorOndelete, 
         bid,bbenefitname,bcalcamount,bflatamount,bfrequency,bdesignationid,bdesignationname,
         bdesignationdeptid,designationdeptdid,bdesignationdeptdeptname,
-        bpercentageValue,editmodal} = this.state;
+        bpercentageValue,editmodal,pageDept = 0, resultDept, errorDept} = this.state;
         return(
             <div className="container-fluid">
 
@@ -209,7 +266,10 @@ class ViewBenefits extends Component{
                 <div className="row">
                   <Modal show={modal} handleClose={e => this.modalClose(e)}>
                       {onPostSuccess?
-                        <div className="alert alert-success" role="alert">
+                        <div className="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>  
                             <p>Benefit record saved successfully</p>
                         </div> : null
                       }
@@ -266,15 +326,6 @@ class ViewBenefits extends Component{
                             <option value="11months">11months</option>
                             <option value="12months">12months</option>
                         </select>
-                    
-                    {/*  <div className="form-group">
-                         <input type="text" list="dl"/>
-                         <datalist id="dl"> 
-                            <option value="1">one</option>
-                            <option value="2">Twp</option>
-                         </datalist>
-                     </div> */}
-
                      </div>
                      <div className="form-group">
                        <div className="col-md-6">
@@ -286,8 +337,8 @@ class ViewBenefits extends Component{
                            </ButtonCustom>  
                        </div>
 
-                        <label htmlFor="selectuser">Select Designation</label>
-                        <select id="designationId">
+                        <label htmlFor="selectuser">Select Designation(s)</label>
+                        <select className="form-select" multiple id="designationId" onChange={this.multipleselectHandler}>
                         {resultDesignation ?
                          resultDesignation.content.map(designation => (
                         <option value={designation.id}>{designation.designationname}</option>
@@ -295,7 +346,32 @@ class ViewBenefits extends Component{
                         : null
                         }   
                         </select>
-                        </div>
+                        </div> 
+
+                        {/* department section */}
+                        <div className="form-group">
+                       <div className="col-md-6">
+                            <ButtonCustom onClick={() => this.fetchAllDepartments(pageDept - 1)} type="button" className="btn btn-success">
+                                  PreviousRecord
+                            </ButtonCustom>  
+                            <ButtonCustom onClick={() => this.fetchAllDepartments(pageDept + 1)} type="button" className="btn btn-primary">
+                                  NextRecord
+                           </ButtonCustom>  
+                       </div>
+
+                        <label htmlFor="selectuser">Select Department(s)</label>
+                        <select className="form-select" multiple id="deptId" onChange={this.multipleselectHandlerDept}>
+                        {resultDept ?
+                         resultDept.content.map(department => (
+                        <option value={department.id}>{department.departmentname}</option>
+                        ))
+                        : null
+                        }   
+                        </select>
+                        </div> 
+
+                        
+
                      <div className="form-group">
                        <button type="button" className="btn btn-primary" onClick={this.addBenefittoDB}>Add</button>
                        <button type="button" className="btn btn-primary" onClick={this.clearModalFields}>Clear</button>

@@ -17,7 +17,7 @@ class viewusers extends Component{
             result: null,
             error:null,
             userstoDisable: [],
-            checked:false,
+            checkedItems:new Map(),
 
             //email message
             loginsentSuccess:null,
@@ -78,19 +78,35 @@ class viewusers extends Component{
         .catch(error => this.setState({error}));
     }
 
-    onCheckboxSelected(id){
-        const{userstoDisable}=this.state;
+    onCheckboxSelected(event){
+        /* const{userstoDisable}=this.state;
         this.setState({
             userstoDisable: userstoDisable.concat(id)
         })
-        console.log(userstoDisable);
+        console.log(userstoDisable); */
+       /*  var isChecked = event.target.checked;
+        var item = event.target.value;
+        this.setState(
+            prevState => ({
+                checkedItems: prevState.checkedItems.set(item,isChecked)
+            })
+        ) */
+        const target = event.target;
+        var value = target.value;
+        if(target.checked){
+            this.state.userstoDisable[value]=value;
+        }else{
+            this.state.userstoDisable.splice(value,1);
+        }
     }
 
-    onDisableUsers(id){
-        const{userstoDisable}=this.state;
+    onDisableUsers(){
+       /*  const{userstoDisable}=this.state;
         this.setState({
             userstoDisable: userstoDisable.push(id)
         })
+        console.log(userstoDisable); */
+        const{userstoDisable} = this.state;
         console.log(userstoDisable);
     }
 
@@ -207,9 +223,11 @@ class viewusers extends Component{
     }
     
     render(){
-        const{searchUser,error,page = 0,result,checked,loginsentSuccess,
+        const{searchUser,error,page = 0,result,loginsentSuccess,
             loginsetnFailure,modal,id,onUpdateSuccess,onUpdateError,
 
+            //checkbox array
+            userstoDisable,
             //user data attributes
             address,city,email,employeeid,employeelevel,password,phonenumber,bankaccountnumber,birthdate,
             gender,hiredate,maritalstatus,birthcertid,driverslicenseid,passportid,ssnitid,votersid,name,tinnumber,
@@ -373,7 +391,7 @@ class viewusers extends Component{
 
                 { result ?
                         <Table list={result.content} pattern={searchUser} onDelete={this.onDelete} onDisableUsers={this.onDisableUsers} 
-                        onCheckboxSelected={this.onCheckboxSelected} checboxsetState={checked} onSendLoginDetails={this.onSendLoginDetails}
+                        onSendLoginDetails={this.onSendLoginDetails}
                         onEditUser={this.onEditUser}/>
                 : null
                 }   
@@ -400,7 +418,7 @@ class Search extends Component{
 
 class Table extends Component{
     render(){
-        const{pattern,list,onDelete,onDisableUsers,onCheckboxSelected,checboxsetState,onSendLoginDetails,
+        const{pattern,list,onDelete,onDisableUsers,onSendLoginDetails,
             onEditUser} = this.props;
          return(
             <div>
@@ -425,10 +443,10 @@ class Table extends Component{
                     <td>{user.bankaccountnumber}</td>
                     <td>{user.hiredate}</td>
                     <td>
-                        <Checkbox onChange={() => onCheckboxSelected(user.id)} type="checkbox" checked={checboxsetState}/>
+                       <input type="checkbox" name="users" value={user.id} onChange={() => this.onCheckboxSelected}/>
                     </td>
                     <td style={{ width: '10%' }}>
-                        <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-success">
+                        <Button onClick={() => onDisableUsers()} type="button" className="btn btn-success">
                          Disable
                         </Button>
                     </td>
@@ -467,14 +485,6 @@ class Table extends Component{
     }
 }
 
-class Checkbox extends Component{
-    render(){
-        const{onChange,type,checked} = this.props;
-        return(
-            <input type={type} onChange={onChange} checked={checked}/>
-        );
-    }
-}
 
 class Button extends Component{
     render(){

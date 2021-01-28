@@ -44,6 +44,8 @@ export const PATH_PATCH_DESIGNATION = 'http://localhost:2345/v1/test/designation
 //need to implement restendpoints starting from here
 export const PATH_GETALL_BENEFITS = 'http://localhost:2345/v1/test/benefit';
 export const PATH_POST_BENEFIT = 'http://localhost:2345/v1/test/benefit';
+export const NO_OF_DESIGNATIONS = 'designations='
+
 export const PATH_PATCH_BENEFIT = 'http://localhost:2345/v1/test/benefit';
 export const PATH_DELETE_BENEFIT = 'http://localhost:2345/v1/test/deletebenefit'
 
