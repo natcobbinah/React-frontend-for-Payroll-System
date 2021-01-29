@@ -13,7 +13,7 @@ class Rolesmain extends Component{
                 <div className="col-md-2">
                       <li className="nav-item">
                             <NavLink className="nav-link" to="/main/dashboard/roles/viewRoles">
-                                <i className="nc-icon nc-chart-pie-35"></i>
+                                <i class="fa fa-users fa-3x" aria-hidden="true"></i>
                                 <p>View Roles</p>
                             </NavLink>
                         </li>
@@ -25,7 +25,7 @@ class Rolesmain extends Component{
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/main/dashboard/roles/assignUserRole">
-                                <i className="nc-icon nc-circle-09"></i>
+                                <i class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
                                 <p>Assign User Roles</p>
                             </NavLink>
                         </li>

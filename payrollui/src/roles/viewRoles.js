@@ -123,12 +123,12 @@ class ViewRoles extends Component{
                 <div className="row">
                     <div className="col-md-6">
                       <ButtonCustom onClick={() => this.fetchAllRoles(page - 1)} type="button" className="btn btn-success">
-                         PreviousRecord
+                      <i class="fa fa-arrow-left" aria-hidden="true"></i>
                       </ButtonCustom>  
                     </div>
                     <div className="col-md-6">
                       <ButtonCustom onClick={() => this.fetchAllRoles(page + 1)} type="button" className="btn btn-primary">
-                        NextRecord
+                      <i class="fa fa-arrow-right" aria-hidden="true"></i>
                       </ButtonCustom>  
                     </div>
                 </div>
@@ -168,7 +168,7 @@ class Table extends Component{
         return(
             <div className="table-responsive table-hover table-striped">
             <table className="table">
-...             <thead className="thead-dark">
+                <thead className="thead-dark">
                     <tr>
                      <th scope="col">ROLE NAMES</th>
                      <th scope="col">ACTION</th>
@@ -180,10 +180,10 @@ class Table extends Component{
                       <td>{role.rolename}</td>
                       <td> 
                         <ButtonCustom onClick={() => onEditRole(role.roleid, role.rolename)} type="button" className="btn btn-success">
-                                Edit
+                        <i className="fa fa-pencil-square-o" title="Edit"></i>
                         </ButtonCustom>
                         <ButtonCustom onClick={() => onDelete(role.roleid)} type="button" className="btn btn-danger">
-                                Delete
+                        <i className="fa fa-trash" title="Delete" ></i>
                         </ButtonCustom>
                       </td>
                     </tr>

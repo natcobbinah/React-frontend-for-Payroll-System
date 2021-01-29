@@ -156,12 +156,12 @@ class Loginform extends Component{
           <div className="row rowSidenav">
           <div className="col-md-3 sidebarlogin"></div>
           <div className="col-md-2"></div>
-          <div className="col-md-4 mt-5 mx-4">
+          <div className="col-md-4 mt-5 mx-4 rowMainnav">
             <GoogleLogin clientId={clientId} buttonText={buttonText}
                            onSuccess={onGoogleLoginSuccess}
                            onFailure={onGoogleLoginFailure}/>
                      <form>
-                      <div className="form-group my-5">
+                      <div className="form-group my-5 ">
                         <label htmlFor="emaillbl">Email</label>
                         <input type="email" className="form-control" id="emaillbl" placeholder="Email here..." onChange={(e) => this.setState({email: e.target.value})}/>
                      </div>

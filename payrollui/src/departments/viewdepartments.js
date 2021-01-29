@@ -153,12 +153,12 @@ class ViewDepartment extends Component{
                 <div className="row">
                     <div className="col-md-6 my-3">
                     <ButtonCustom onClick={() => this.fetchAllDepartments(page - 1)} type="button" className="btn btn-success">
-                        PreviousRecord
+                       <i class="fa fa-arrow-left" aria-hidden="true"></i>
                     </ButtonCustom>  
                     </div>
                     <div className="col-md-6 my-3">
                     <ButtonCustom onClick={() => this.fetchAllDepartments(page + 1)} type="button" className="btn btn-primary">
-                      NextRecord
+                       <i class="fa fa-arrow-right" aria-hidden="true"></i>
                    </ButtonCustom>  
                     </div>
                 </div>
@@ -198,7 +198,7 @@ class Table extends Component{
         return(
             <div className="table-responsive table-hover table-striped">
             <table className="table">
-...             <thead className="thead-dark">
+             <thead className="thead-dark">
                     <tr>
                      <th scope="col">DEPARTMENT_CODE</th>
                      <th scope="col">DEPARTMENT_NAME</th>
@@ -211,11 +211,11 @@ class Table extends Component{
                       <td>{department.departmentid}</td>
                       <td>{department.departmentname}</td>
                       <td>
-                        <ButtonCustom onClick={() => onEditDepartment(department.id,department.departmentid,department.departmentname)} type="button" className="btn btn-success mx-2">
-                                Edit
+                        <ButtonCustom onClick={() => onEditDepartment(department.id,department.departmentid,department.departmentname)} type="button" className="btn btn-success mx-2"> 
+                        <i className="fa fa-pencil-square-o" title="Edit"></i>
                         </ButtonCustom>
                         <ButtonCustom onClick={() => onDelete(department.id)} type="button" className="btn btn-danger">
-                                Delete
+                        <i className="fa fa-trash" title="Delete" ></i>
                         </ButtonCustom>
                       </td>
                     </tr>

@@ -13,19 +13,19 @@ class DepartmentMain extends Component{
             <div className="col-md-2">
                   <li className="nav-item">
                         <NavLink className="nav-link" to="/main/dashboard/department/viewdepartment">
-                            <i className="nc-icon nc-chart-pie-35"></i>
+                            <i class="fa fa-eye fa-3x" aria-hidden="true"></i>
                             <p>View Departments</p>
                         </NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink className="nav-link" to="/main/dashboard/department/adddepartment">
-                            <i className="nc-icon nc-circle-09"></i>
+                            <i class="fa fa-university fa-3x" aria-hidden="true"></i>
                             <p>Add Department</p>
                         </NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink className="nav-link" to="/main/dashboard/department/assignDepartment">
-                            <i className="nc-icon nc-circle-09"></i>
+                            <i class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
                             <p>Assign Department</p>
                         </NavLink>
                     </li>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {PATH_BASE,PARAM_PAGE,PATH_GETALL_DESIGNATION,PATH_ASSIGNUSERDESIGNATION} from '../API_URLS'
+import 'bootstrap/dist/css/bootstrap.css';
 
 class AssignUserDesignation extends Component{
     constructor(props){
@@ -78,55 +79,64 @@ class AssignUserDesignation extends Component{
                         <p>Error assigning user designation</p>
                     </div> : null
                 }  
+
+                <div className="row mt-2">
+                <div className="col-md-6">
+                   <div className="col-md-3"></div>
+                    <div className="col-md-3">
+                        <div>
+                        <ButtonCustom onClick={() => this.fetchAllUsers(pageUser - 1)} type="button" className="btn btn-primary">
+                           <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        </ButtonCustom> 
+                        <ButtonCustom onClick={() => this.fetchAllUsers(pageUser + 1)} type="button" className="btn btn-primary mx-1">
+                           <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </ButtonCustom> 
+                        </div>
+                        <div>
+                           <label htmlFor="selectuser">Select User</label>
+                           <select id="userid" className="form-select form-select-lg mb-3">
+                          {resultUserfetch ?
+                           resultUserfetch.content.map(user => (
+                          <option value={user.id}>{user.name}</option>
+                          ))
+                          : null
+                          }   
+                          </select>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <div className="col-md-3"></div>
+                    <div className="col-md-3">
+                        <div>
+                          <ButtonCustom onClick={() => this.fetchAllDesignations(pageDesignation - 1)} type="button" className="btn btn-primary">
+                             <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                          </ButtonCustom> 
+                          <ButtonCustom onClick={() => this.fetchAllDesignations(pageDesignation + 1)} type="button" className="btn btn-primary mx-1">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                          </ButtonCustom> 
+                        </div>
+                        <div>
+                           <label htmlFor="selectuser">Select Designation</label>
+                           <select id="designationId" className="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                           {result ?
+                            result.content.map(designation => (
+                            <option value={designation.id}>{designation.designationname}</option>
+                           ))
+                            : null
+                           }   
+                           </select>
+                        </div>
+                    </div>
+                </div>
+                </div>
                 
                 <form>
-                    <div className="form-row">
-                        <div className="form-group col-md-6">                
-                        <ButtonCustom onClick={() => this.fetchAllUsers(pageUser - 1)} type="button" className="btn btn-success">
-                            PreviousRecord
+                    <div className="form-group col-md-6">
+                        <ButtonCustom onClick={() => this.assignUserDesignation()} type="button" className="btn btn-success">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                            Add designation
                         </ButtonCustom> 
-                        <ButtonCustom onClick={() => this.fetchAllUsers(pageUser + 1)} type="button" className="btn btn-success">
-                            NextRecord
-                        </ButtonCustom> 
-                        </div>
-
-                        <div className="form-group col-md-6">   
-                        <label htmlFor="selectuser">Select User</label>
-                        <select id="userid">
-                        {resultUserfetch ?
-                         resultUserfetch.content.map(user => (
-                        <option value={user.id}>{user.name}</option>
-                        ))
-                        : null
-                        }   
-                        </select>
-                        </div>  
-                
-                        <div className="form-group col-md-6">
-                        <ButtonCustom onClick={() => this.fetchAllDesignations(pageDesignation - 1)} type="button" className="btn btn-success">
-                            PreviousRecord
-                        </ButtonCustom> 
-                        <ButtonCustom onClick={() => this.fetchAllDesignations(pageDesignation + 1)} type="button" className="btn btn-success">
-                            NextRecord
-                        </ButtonCustom> 
-                        </div>
-                  
-                        <div className="form-group col-md-6">
-                        <label htmlFor="selectuser">Select Designation</label>
-                        <select id="designationId">
-                        {result ?
-                         result.content.map(designation => (
-                        <option value={designation.id}>{designation.designationname}</option>
-                        ))
-                        : null
-                        }   
-                        </select>
-                        </div>
-                        <div className="form-group col-md-6">
-                            <ButtonCustom onClick={() => this.assignUserDesignation()} type="button" className="btn btn-success">
-                                Assign Designation
-                            </ButtonCustom> 
-                        </div>
                     </div>
                 </form>
             </div>

@@ -73,10 +73,10 @@ class AssignDepartment extends Component {
                          <div className="form-group col-md-6">
                              <div className="row">
                              <ButtonCustom onClick={() => this.fetchAllDepartments(pageDept - 1)} type="button" className="btn btn-success">
-                              PreviousRecord
+                              <i class="fa fa-arrow-left" aria-hidden="true"></i>
                              </ButtonCustom> 
-                             <ButtonCustom onClick={() => this.fetchAllDepartments(pageDept + 1)} type="button" className="btn btn-success">
-                              NextRecord
+                             <ButtonCustom onClick={() => this.fetchAllDepartments(pageDept + 1)} type="button" className="btn btn-success mx-2">
+                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                              </ButtonCustom> 
                              </div> 
                              <div className="row">
@@ -94,10 +94,10 @@ class AssignDepartment extends Component {
                           <div className="form-group col-md-6">
                               <div className="row">
                               <ButtonCustom onClick={() => this.fetchAllUsers(pageUser - 1)} type="button" className="btn btn-success">
-                                PreviousRecord
+                              <i class="fa fa-arrow-left" aria-hidden="true"></i>
                              </ButtonCustom> 
-                             <ButtonCustom onClick={() => this.fetchAllUsers(pageUser + 1)} type="button" className="btn btn-success">
-                                NextRecord
+                             <ButtonCustom onClick={() => this.fetchAllUsers(pageUser + 1)} type="button" className="btn btn-success mx-2">
+                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                              </ButtonCustom> 
                               </div>
     

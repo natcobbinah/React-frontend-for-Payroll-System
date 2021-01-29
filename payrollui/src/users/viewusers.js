@@ -430,7 +430,7 @@ class Table extends Component{
                  </tr>
                 </thead>
                 <tbody>
-           ``    {list.filter(searchedForRecord(pattern)).map(user => 
+                 {list.filter(searchedForRecord(pattern)).map(user => 
                     <tr key={user.id} className="align-bottom">
                     <td>{user.email}</td>
                     <td>{user.employeeid}</td>
@@ -441,17 +441,17 @@ class Table extends Component{
                     <td>
                       <input type="checkbox"  onChange={() => onSelected(user.id)}/>
                     </td>
-                    <td style={{ width: '10%' }}>
+                    <td>
                         <Button onClick={() => onDisableUsers()} type="button" className="btn btn-success">
-                          <i class="fa fa-bug" title="Enable" aria-hidden="true"></i>
+                        <i class="fa fa-toggle-on" title="Disable" aria-hidden="true"></i>
                         </Button>
                     </td>
-                    <td style={{ width: '10%' }}>
+                    <td>
                         <Button onClick={() => onDisableUsers(user.id)} type="button" className="btn btn-info">
                         <i class="fa fa-toggle-on" title="Disable" aria-hidden="true"></i>
                         </Button>
                     </td>
-                     <td style={{ width: '10%' }}>
+                     <td>
                         <Button onClick={() => onEditUser(user.id,user.address,user.city,user.email,
                          user.employeeid,user.employeelevel,user.enabled,user.password,user.phonenumber,
                          user.bankaccountnumber,user.birthdate,user.gender,user.hiredate,user.maritalstatus,
@@ -461,12 +461,12 @@ class Table extends Component{
                             <i className="fa fa-pencil-square-o" title="Edit"></i>
                          </Button>
                       </td>
-                      <td style={{ width: '10%' }}>
+                      <td>
                           <Button onClick={() => onDelete(user.id)} type="button" className="btn btn-danger">
                           <i className="fa fa-trash" title="Delete" ></i>
                           </Button>
                       </td>
-                      <td style={{ width: '10%' }}>
+                      <td>
                            <Button onClick={() => onSendLoginDetails(user.email,user.password)} type="button" className="btn btn-dark">
                            <i class="fa fa-envelope" aria-hidden="true" title="Send Login Details"></i>
                            </Button>

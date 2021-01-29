@@ -7,6 +7,8 @@ import Rolesmain from '../roles/rolesMain'
 import DesignationMain from '../designation/designationMain'
 import BenefitMain from '../benefits/benefitMain'
 
+import viewusers from '../users/viewusers';
+
 class Dashboard extends Component {
   render() {
     return (
@@ -32,6 +34,7 @@ class Dashboard extends Component {
             </nav> 
             
             <div className="col-md-12">
+                <Route path="/main/dashboard/usersmain/**" component={viewusers}/>
                 <Route path="/main/dashboard/usersmain" component={Usermain}/>
                 <Route path="/main/dashboard/department" component={DepartmentMain}/>
                 <Route path="/main/dashboard/roles" component={Rolesmain}/>

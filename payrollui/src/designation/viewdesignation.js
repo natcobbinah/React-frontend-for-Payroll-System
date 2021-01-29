@@ -184,7 +184,7 @@ class ViewDesignation extends Component{
                 </div> : null
               }
               {id ?
-                <div className="row">
+                <div className="row mt-2">
                   <Modal show={editmodal} handleClose={e => this.EditmodalClose(e)}>
                      <div className="form-group">
                         <label htmlFor="designationname">Change DesignationName</label>
@@ -199,10 +199,11 @@ class ViewDesignation extends Component{
                 null
               }
 
-                 <div className="row">
+                 <div className="row mt-2">
                     <div className="col-md-6">
                       <ButtonCustom onClick={() => this.popupModal()} type="button" className="btn btn-success">
-                         Add Designation
+                      <i class="fa fa-plus-square" title="Add designation" aria-hidden="true"></i>
+                        Add Designation
                       </ButtonCustom>  
                     </div>
                 </div>
@@ -218,10 +219,10 @@ class ViewDesignation extends Component{
                      </div>
                      <div className="form-group">
                         <ButtonCustom onClick={() => this.fetchAllDepartments(pageDept - 1)} type="button" className="btn btn-success">
-                              PreviousRecord
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
                         </ButtonCustom> 
-                        <ButtonCustom onClick={() => this.fetchAllDepartments(pageDept + 1)} type="button" className="btn btn-success">
-                              NextRecord
+                        <ButtonCustom onClick={() => this.fetchAllDepartments(pageDept + 1)} type="button" className="btn btn-success mx-2">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </ButtonCustom>     
                      </div>
                      <div className="form-group">
@@ -230,7 +231,7 @@ class ViewDesignation extends Component{
                            <p>Populating department field unsuccesful: Server might be down</p>
                          </div> : null
                         }
-                        <select id="deptid" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <select className="form-select form-select-lg" id="deptid"  aria-label=".form-select-lg example">
                         {deptResult?
                          deptResult.content.map(department => (
                             <option value={department.id}>{department.departmentname}</option>
@@ -263,15 +264,16 @@ class ViewDesignation extends Component{
                    </div> : null
                 }       
 
-                <div className="row mt-2">
+                <div className="row mt-2 my-2">
                     <div className="col-md-6">
                       <ButtonCustom onClick={() => this.fetchAllDesignations(page - 1)} type="button" className="btn btn-success">
-                         PreviousRecord
+                      <i class="fa fa-arrow-left" aria-hidden="true"></i>
                       </ButtonCustom>  
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-5"></div>
+                    <div className="col-md-1">
                       <ButtonCustom onClick={() => this.fetchAllDesignations(page + 1)} type="button" className="btn btn-primary">
-                        NextRecord
+                      <i class="fa fa-arrow-right" aria-hidden="true"></i>
                       </ButtonCustom>  
                     </div>
                 </div>
@@ -291,7 +293,7 @@ class Table extends Component{
         return(
             <div className="table-responsive table-hover table-striped">
             <table className="table">
-...             <thead className="thead-dark">
+               <thead className="thead-dark">
                     <tr>
                      <th scope="col">DESIGNATION NAME</th>
                      <th scope="col">DEPARTMENT</th>
@@ -307,10 +309,10 @@ class Table extends Component{
                         <ButtonCustom onClick={() => onEditDesignation(designation.id,designation.designationname ,
                             designation.department.id,designation.department.departmentid,
                             designation.department.departmentname)} type="button" className="btn btn-primary">
-                                Edit
+                                <i className="fa fa-pencil-square-o" title="Edit"></i>
                         </ButtonCustom> 
-                        <ButtonCustom onClick={() => onDelete(designation.id)} type="button" className="btn btn-danger">
-                                Delete
+                        <ButtonCustom onClick={() => onDelete(designation.id)} type="button" className="btn btn-danger mx-2">
+                        <i className="fa fa-trash" title="Delete" ></i>
                         </ButtonCustom>
                       </td>
                     </tr>

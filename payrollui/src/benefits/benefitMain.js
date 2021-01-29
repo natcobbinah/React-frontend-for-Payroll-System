@@ -11,13 +11,13 @@ class BenefitMain extends Component{
                 <div className="col-md-2">
                       <li className="nav-item">
                             <NavLink className="nav-link" to="/main/dashboard/benefits/viewbenefits">
-                                <i className="nc-icon nc-chart-pie-35"></i>
+                                <i class="fa fa-eye fa-3x" aria-hidden="true"></i>
                                 <p>View Benefits</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/main/dashboard/benefits/viewuserBenefit">
-                                <i className="nc-icon nc-circle-09"></i>
+                                <i class="fa fa-user-circle-o fa-3x" aria-hidden="true"></i>
                                 <p>View User Benefits</p>
                             </NavLink>
                         </li>

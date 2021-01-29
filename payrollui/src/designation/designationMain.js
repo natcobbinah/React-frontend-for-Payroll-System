@@ -12,14 +12,14 @@ class DesignationMain extends Component{
                 <div className="col-md-2">
                       <li className="nav-item">
                             <NavLink className="nav-link" to="/main/dashboard/designation/viewDesignation">
-                                <i className="nc-icon nc-chart-pie-35"></i>
+                                <i class="fa fa-eye fa-3x" aria-hidden="true"></i>
                                 <p>View Designation</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/main/dashboard/designation/assignUserDesignation">
-                                <i className="nc-icon nc-circle-09"></i>
-                                <p>AssignUser Designation</p>
+                                <i class="fa fa-wrench fa-3x" aria-hidden="true"></i>
+                                <p>Assign Designation</p>
                             </NavLink>
                         </li>
                 </div>

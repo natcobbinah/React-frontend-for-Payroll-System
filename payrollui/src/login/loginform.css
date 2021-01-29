@@ -1,5 +1,7 @@
 .sidebarlogin {
-  background-color: chocolate;
+  background-image: url("/src/assets/img/amalitech.png");
+  background-repeat: no-repeat;
+  background-color: #d95a27;
 }
 
 .rowSidenav {
